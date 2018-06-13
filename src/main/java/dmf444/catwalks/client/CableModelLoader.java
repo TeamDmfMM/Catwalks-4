@@ -40,14 +40,16 @@ public class CableModelLoader implements ICustomModelLoader {
         static ResourceLocation top_RL = new ResourceLocation("catwalks:block/cable_top");
         static ResourceLocation mid_RL = new ResourceLocation("catwalks:block/cable_middle");
         static ResourceLocation bot_RL = new ResourceLocation("catwalks:block/cable_bottom");
+        static ResourceLocation clp_RL = new ResourceLocation("catwalks:block/cable_clip");
 
-        private IModel top = null, bot = null, mid = null;
+        private IModel top = null, bot = null, mid = null, clp = null;
 
         @Override
         public Collection<ResourceLocation> getDependencies() {
             if (top == null) top = ModelLoaderRegistry.getModelOrMissing(top_RL);
             if (mid == null) mid = ModelLoaderRegistry.getModelOrMissing(mid_RL);
             if (bot == null) bot = ModelLoaderRegistry.getModelOrMissing(bot_RL);
+            if (clp == null) clp = ModelLoaderRegistry.getModelOrMissing(clp_RL);
             return ImmutableList.of(top_RL, mid_RL, bot_RL);
         }
 
@@ -56,10 +58,14 @@ public class CableModelLoader implements ICustomModelLoader {
             if (top == null) top = ModelLoaderRegistry.getModelOrMissing(top_RL);
             if (mid == null) mid = ModelLoaderRegistry.getModelOrMissing(mid_RL);
             if (bot == null) bot = ModelLoaderRegistry.getModelOrMissing(bot_RL);
+            if (clp == null) clp = ModelLoaderRegistry.getModelOrMissing(clp_RL);
             return new CableModel(
                     top.bake(state, format, bakedTextureGetter),
                     mid.bake(state, format, bakedTextureGetter),
-                    bot.bake(state, format, bakedTextureGetter)
+                    bot.bake(state, format, bakedTextureGetter),
+                    clp,
+                    format,
+                    bakedTextureGetter
             );
         }
     }
