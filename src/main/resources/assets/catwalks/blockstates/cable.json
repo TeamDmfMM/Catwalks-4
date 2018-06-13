@@ -1,22 +1,13 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "catwalks:cable_middle",
+    "model": "catwalks:cable_middle!catwalks:cable",
     "textures": {
       "all": "catwalks:blocks/cable/steel/cable"
     }
   },
   "variants": {
     "normal": [{}],
-    "inventory": [{}],
-    "cablestate": {
-      "top": {
-        "model": "catwalks:cable_top"
-      },
-      "middle": {},
-      "bottom": {
-        "model": "minecraft:dirt"
-      }
-    }
+    "inventory": [{}]
   }
 }

@@ -45,9 +45,9 @@ public class CableBlock extends Block {
             if(matchup && matchdown) {
                 theState = theState.withProperty(STATE, CableState.MIDDLE);
             } else if(matchup) {
-                theState = theState.withProperty(STATE, CableState.TOP);
-            } else {
                 theState = theState.withProperty(STATE, CableState.BOTTOM);
+            } else {
+                theState = theState.withProperty(STATE, CableState.TOP);
             }
 
             IBlockState east = world.getBlockState(pos.east());
@@ -57,19 +57,19 @@ public class CableBlock extends Block {
             Block toCheck = Blocks.STONE_SLAB;
 
             if(east.getBlock() == toCheck) {
-                theState.withProperty(FACING, EnumFacing.EAST);
-                theState.withProperty(CONNECTED, true);
+                theState = theState.withProperty(FACING, EnumFacing.EAST);
+                theState = theState.withProperty(CONNECTED, true);
             } else if(west.getBlock() == toCheck){
-                theState.withProperty(FACING, EnumFacing.WEST);
-                theState.withProperty(CONNECTED, true);
+                theState = theState.withProperty(FACING, EnumFacing.WEST);
+                theState = theState.withProperty(CONNECTED, true);
             } else if(north.getBlock() == toCheck){
-                theState.withProperty(FACING, EnumFacing.NORTH);
-                theState.withProperty(CONNECTED, true);
+                theState = theState.withProperty(FACING, EnumFacing.NORTH);
+                theState = theState.withProperty(CONNECTED, true);
             } else if(south.getBlock() == toCheck){
-                theState.withProperty(FACING, EnumFacing.SOUTH);
-                theState.withProperty(CONNECTED, true);
+                theState = theState.withProperty(FACING, EnumFacing.SOUTH);
+                theState = theState.withProperty(CONNECTED, true);
             } else {
-                theState.withProperty(CONNECTED, false);
+                theState = theState.withProperty(CONNECTED, false);
             }
             return theState;
         }

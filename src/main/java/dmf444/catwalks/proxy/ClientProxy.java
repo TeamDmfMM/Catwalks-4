@@ -1,10 +1,12 @@
 package dmf444.catwalks.proxy;
 
+import dmf444.catwalks.client.CableModelLoader;
 import dmf444.catwalks.registry.ItemRegistry;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -18,6 +20,7 @@ public class ClientProxy extends CommonProxy{
         super.pre(e);
 
         MinecraftForge.EVENT_BUS.register(this);
+        ModelLoaderRegistry.registerLoader(new CableModelLoader());
     }
 
     public void init(FMLInitializationEvent e) {
