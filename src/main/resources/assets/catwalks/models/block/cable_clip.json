@@ -1,8 +1,8 @@
 {
 "__comment": "Designed by Winddelay with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
-"textures": {
-    "all": "catwalks:blocks/cable/steel/cable"
-},
+    "textures": {
+        "all": "catwalks:blocks/cable/steel/cable"
+    },
 "elements": [ 
 {
     "from": [ 4, -1.5, -2 ],

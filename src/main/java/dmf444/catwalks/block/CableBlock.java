@@ -78,6 +78,11 @@ public class CableBlock extends Block {
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
     public BlockStateContainer createBlockState() {
         return new BlockStateContainer.Builder(this).add(CONNECTED).add(FACING).add(STATE).build();
     }
