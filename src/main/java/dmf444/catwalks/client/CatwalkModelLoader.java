@@ -26,7 +26,7 @@ public class CatwalkModelLoader implements ICustomModelLoader {
 
     @Override
     public IModel loadModel(ResourceLocation modelLocation) throws Exception {
-        return new CatwalkModelWrapper(modelLocation.getResourceDomain(), modelLocation.getResourcePath(), "");
+        return new CatwalkModelWrapper(modelLocation.getResourceDomain(), modelLocation.getResourcePath().replace("!!catwalks:catwalk", ""), "");
     }
 
     @Override
