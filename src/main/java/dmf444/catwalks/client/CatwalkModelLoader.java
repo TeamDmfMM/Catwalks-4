@@ -26,7 +26,7 @@ public class CatwalkModelLoader implements ICustomModelLoader {
 
     @Override
     public IModel loadModel(ResourceLocation modelLocation) throws Exception {
-        return new CatwalkModelWrapper(modelLocation.getResourceDomain(), modelLocation.getResourcePath().replace("!!catwalks:catwalk", ""), "");
+        return new CatwalkModelWrapper(modelLocation.getResourceDomain(), modelLocation.getResourcePath().replace("!!catwalks:catwalk", "").replace("models/", ""), "");
     }
 
     @Override
@@ -45,10 +45,6 @@ public class CatwalkModelLoader implements ICustomModelLoader {
             item_r1 = new ResourceLocation(domain, path + "/item" + postfix);
             rails_r1 = new ResourceLocation(domain, path + "/rails" + postfix);
             floor_r1 = new ResourceLocation(domain, path + "/floor" + postfix);
-
-            item = ModelLoaderRegistry.getModelOrMissing(item_r1);
-            rails = ModelLoaderRegistry.getModelOrMissing(rails_r1);
-            floor = ModelLoaderRegistry.getModelOrMissing(floor_r1);
         }
 
         @Override
@@ -58,6 +54,11 @@ public class CatwalkModelLoader implements ICustomModelLoader {
 
         @Override
         public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+            if (item == null || rails == null || floor == null) {
+                item = ModelLoaderRegistry.getModelOrMissing(item_r1);
+                rails = ModelLoaderRegistry.getModelOrMissing(rails_r1);
+                floor = ModelLoaderRegistry.getModelOrMissing(floor_r1);
+            }
             return new CatwalkModel(item.bake(state, format, bakedTextureGetter),
                     rails.bake(state, format, bakedTextureGetter),
                     floor.bake(state, format, bakedTextureGetter)

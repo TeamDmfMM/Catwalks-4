@@ -52,7 +52,7 @@ public class ModelSlicer {
             public void put(int element, float... data)
             {
                 VertexFormatElement.EnumUsage usage = parent.getVertexFormat().getElement(element).getUsage();
-                if(usage == VertexFormatElement.EnumUsage.POSITION && data.length == 3){
+                if(usage == VertexFormatElement.EnumUsage.POSITION && data.length >= 3){
                     positions.set(i[0]++,new Vec3d(data[0], data[1], data[2]));
                 }
                 super.put(element, data);

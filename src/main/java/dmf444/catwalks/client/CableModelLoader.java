@@ -50,7 +50,7 @@ public class CableModelLoader implements ICustomModelLoader {
             if (mid == null) mid = ModelLoaderRegistry.getModelOrMissing(mid_RL);
             if (bot == null) bot = ModelLoaderRegistry.getModelOrMissing(bot_RL);
             if (clp == null) clp = ModelLoaderRegistry.getModelOrMissing(clp_RL);
-            return ImmutableList.of(top_RL, mid_RL, bot_RL);
+            return ImmutableList.of(top_RL, mid_RL, bot_RL, clp_RL);
         }
 
         @Override
