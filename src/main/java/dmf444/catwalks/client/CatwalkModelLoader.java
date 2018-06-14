@@ -21,7 +21,7 @@ public class CatwalkModelLoader implements ICustomModelLoader {
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
-        return modelLocation.getResourceDomain().equals(Catwalks.MODID) && modelLocation.getResourcePath().contains("catwalk_normal");
+        return modelLocation.getResourceDomain().equals(Catwalks.MODID) && modelLocation.getResourcePath().contains("!!catwalks:catwalk");
     }
 
     @Override
@@ -58,7 +58,10 @@ public class CatwalkModelLoader implements ICustomModelLoader {
 
         @Override
         public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-            return null;
+            return new CatwalkModel(item.bake(state, format, bakedTextureGetter),
+                    rails.bake(state, format, bakedTextureGetter),
+                    floor.bake(state, format, bakedTextureGetter)
+            );
         }
     }
 }
