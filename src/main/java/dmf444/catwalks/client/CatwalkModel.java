@@ -1,5 +1,7 @@
 package dmf444.catwalks.client;
 
+import com.google.common.collect.ImmutableList;
+import dmf444.catwalks.block.CatwalkBlock;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 import net.minecraft.block.state.IBlockState;
@@ -9,17 +11,19 @@ import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.property.IExtendedBlockState;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 
 import static java.util.Arrays.asList;
 
 public class CatwalkModel implements IBakedModel{
 
     IBakedModel item, rails, floor;
+    static Map<CatwalkState, List<BakedQuad>> cache = new HashMap<>();
 
     public CatwalkModel(IBakedModel item, IBakedModel rails, IBakedModel floor) {
         this.item = item;
@@ -29,7 +33,30 @@ public class CatwalkModel implements IBakedModel{
 
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-        return null;
+        CatwalkState cw = (CatwalkState) ((IExtendedBlockState)state).getValue(CatwalkBlock.CATWALK_STATE);
+        if (cw == null) {
+            cw = new CatwalkState(RailSection.OUTER, RailSection.OUTER, RailSection.OUTER, RailSection.OUTER,
+                                  FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, 0);
+        }
+
+        if(cache.containsKey(cw)){
+            return cache.get(cw);
+        } else {
+            ImmutableList.Builder<BakedQuad> builder = new ImmutableList.Builder<>();
+            List<BakedQuad> railQuads = rails.getQuads(state, side, rand);
+            List<BakedQuad> floorQuads = floor.getQuads(state, side, rand);
+
+            Function<BakedQuad, Boolean> filter = (BakedQuad q) -> (!q.hasTintIndex() || cw.hasLayer(q.getTintIndex()));
+
+            for(int it=0; it < 4; it++){
+                Vec3d offset = new Vec3d(it == 1 || it == 2 ? 0.5 : 0.0, -1,
+                                         it > 1 ? 0.5 : 0.0);
+                ModelSlicer.sliceInto(builder, railQuads, cw.railSections.get(it).boundingBoxes.get(it), offset, filter);
+            }
+
+            return builder.build();
+        }
+
     }
 
 
