@@ -196,9 +196,9 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
         TileEntity tileEntity = world.getTileEntity(pos);
         IExtendedBlockState estate = (IExtendedBlockState) super.getExtendedState(state, world, pos);
         if(tileEntity instanceof CatwalkTile) {
-            estate.withProperty(CATWALK_STATE, ((CatwalkTile) tileEntity).getCatwalkState());
+            estate = estate.withProperty(CATWALK_STATE, ((CatwalkTile) tileEntity).getCatwalkState());
         }
-        return state;
+        return estate;
     }
 
     @Override
