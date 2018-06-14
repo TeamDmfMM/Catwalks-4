@@ -33,6 +33,7 @@ public class Catwalks {
     public void preInit(FMLPreInitializationEvent e) {
         side = e.getSide();
         proxy.pre(e);
+        //Testing builds?
     }
 
     @Mod.EventHandler
