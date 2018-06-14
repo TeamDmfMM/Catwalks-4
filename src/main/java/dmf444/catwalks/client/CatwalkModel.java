@@ -33,7 +33,7 @@ public class CatwalkModel implements IBakedModel{
 
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-        CatwalkState cw = (CatwalkState) ((IExtendedBlockState)state).getValue(CatwalkBlock.CATWALK_STATE);
+        CatwalkState cw = (CatwalkState) (state != null ? ((IExtendedBlockState) state).getValue(CatwalkBlock.CATWALK_STATE) : null);
         if (cw == null) {
             cw = new CatwalkState(RailSection.OUTER, RailSection.OUTER, RailSection.OUTER, RailSection.OUTER,
                                   FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, 0);
