@@ -31,6 +31,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -39,7 +40,30 @@ import java.util.*;
 
 public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, ICustomItemBlock {
 
-    public static UnlistedArbitraryProperty CATWALK_STATE = new UnlistedArbitraryProperty("state", CatwalkState.class);
+    //public static UnlistedArbitraryProperty CATWALK_STATE = new UnlistedArbitraryProperty("state", CatwalkState.class);
+
+    public static final IUnlistedProperty<CatwalkState> CATWALK_STATE  = new IUnlistedProperty<CatwalkState>() {
+
+        @Override
+        public String getName() {
+            return "cablestate";
+        }
+
+        @Override
+        public boolean isValid(CatwalkState value) {
+            return true;
+        }
+
+        @Override
+        public Class<CatwalkState> getType() {
+            return CatwalkState.class;
+        }
+
+        @Override
+        public String valueToString(CatwalkState value) {
+            return value.toString().toLowerCase();
+        }
+    };
     public static PropertyEnum<CatwalkMaterial> MATERIAL = PropertyEnum.create("material", CatwalkMaterial.class);
 
     private static Map<EnumFacing, Pair<AxisAlignedBB, AxisAlignedBB>> boundingBoxes = new HashMap<>();
