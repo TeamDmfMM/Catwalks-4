@@ -38,13 +38,13 @@ public class ModelSlicer {
     }
 
     private BakedQuad sliceQuad(BakedQuad quad, AxisAlignedBB bb, Vec3d offset){
-        ArrayList<Vec3d> positions = new ArrayList<Vec3d>();
+        ArrayList<Vec3d> positions = new ArrayList<Vec3d>(4);
         positions.add(Vec3d.ZERO);
         positions.add(Vec3d.ZERO);
         positions.add(Vec3d.ZERO);
         positions.add(Vec3d.ZERO);
 
-        int i = 0;
+        final int[] i = {0};
         UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(quad.getFormat());
 
         quad.pipe(new VertexTransformer(builder){
@@ -53,10 +53,52 @@ public class ModelSlicer {
             {
                 VertexFormatElement.EnumUsage usage = parent.getVertexFormat().getElement(element).getUsage();
                 if(usage == VertexFormatElement.EnumUsage.POSITION && data.length == 3){
-                    positions.add(i++, new Vec3d(data[0], data[1], data[2]));
+                    positions.set(i[0]++,new Vec3d(data[0], data[1], data[2]));
                 }
                 super.put(element, data);
             }
         });
+
+        Vec3d normal = ((positions.get(1).subtract(positions.get(0)))).crossProduct(positions.get(2).subtract(positions.get(0))).normalize();
+
+        Vec3d pos = Vec3d.ZERO;
+        for (Vec3d it : positions) {
+            pos = pos.add(it);
+        }
+
+        pos = pos.scale(0.25);
+        pos = pos.subtract(normal.scale(0.001));
+        if (!bb.contains(pos)) return null;
+
+        builder = new UnpackedBakedQuad.Builder(quad.getFormat());
+
+        quad.pipe(new VertexTransformer(builder) {
+            @Override
+            public void put(int element, float... data_) {
+                float[] data = data_;
+                VertexFormatElement.EnumUsage usage = parent.getVertexFormat().getElement(element).getUsage();
+
+                if (usage == VertexFormatElement.EnumUsage.POSITION && data.length >= 3) {
+                    data = data.clone();
+                    data[0] = (float)(data[0] - (bb.minX - offset.x));
+                    data[1] = (float)(data[1] - (bb.minY - offset.y));
+                    data[2] = (float)(data[2] - (bb.minZ - offset.z));
+                }
+                if (usage == VertexFormatElement.EnumUsage.NORMAL && data.length >= 3 && i[0] >= 2) {
+                    data = data.clone();
+                    data[0] = (float) normal.x;
+                    data[1] = (float) normal.y;
+                    data[2] = (float) normal.z;
+                }
+                super.put(element, data);
+            }
+        });
+
+        UnpackedBakedQuad unpacked = builder.build();
+
+        return new BakedQuad( // pack the quad, for memory reasons
+                unpacked.getVertexData(), unpacked.getTintIndex(), unpacked.getFace(), unpacked.getSprite(),
+                unpacked.shouldApplyDiffuseLighting(), unpacked.getFormat()
+        );
     }
 }
