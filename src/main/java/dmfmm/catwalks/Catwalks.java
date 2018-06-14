@@ -15,8 +15,8 @@ public class Catwalks {
     public static final String MODNAME = "Catwalks";
     public static final String VERSION = "@VERSION@";
     public static final String ALLOWED = "[1.12.2,)";
-    public static final String CLIENT = "ClientProxy";
-    public static final String SERVER = "CommonProxy";
+    public static final String CLIENT = "dmfmm.catwalks.proxy.ClientProxy";
+    public static final String SERVER = "dmfmm.catwalks.proxy.CommonProxy";
     public static final String DEPENDENCIES = "required-after:forge@[13.19.1.2195,)";
 
     public static Side side;
