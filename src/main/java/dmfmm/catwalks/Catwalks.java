@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class Catwalks {
     public static final String MODID = "catwalks";
     public static final String MODNAME = "Catwalks";
-    public static final String VERSION = "4.0.0";
+    public static final String VERSION = "@VERSION@";
     public static final String ALLOWED = "[1.12.2,)";
     public static final String CLIENT = "ClientProxy";
     public static final String SERVER = "CommonProxy";

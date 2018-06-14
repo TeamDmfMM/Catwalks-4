@@ -12,17 +12,30 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 version = "1.0"
-group = "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+group = "dmfmm.catwalks" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "catwalks"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+def groovy.lang.GString mod_version = "${config.minecraft_version}-${config.mod_version_major}.${config.mod_version_minor}.${System.getenv("BUILD_NUMBER") ?: config.build_number}"
+
+
 minecraft {
-    version = "1.12.2-14.23.4.2705"
+    version = config.minecraft_version + "-" + config.forge_version //"1.12.2-14.23.4.2705"
     runDir = "run"
+
+    replaceIn "Catwalks.java"
+    replace "@VERSION@", mod_version
     
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
@@ -32,6 +45,7 @@ minecraft {
     mappings = "snapshot_20171003"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
+version = mod_version
 
 dependencies {
     // you may put jars on which you depend on in ./libs
