@@ -106,6 +106,7 @@ public class CatwalkModel implements IBakedModel{
             this.z = z - 1;
 
             AxisAlignedBB model = new AxisAlignedBB(this.x, -1.0, this.z, this.x+0.5, 2.0, this.z+0.5);
+            boundingBoxes = new ArrayList<>();
             boundingBoxes.addAll(Arrays.asList(
                     model,
                     model.offset(0.5, 0.0, 0.0),
@@ -129,6 +130,7 @@ public class CatwalkModel implements IBakedModel{
             this.z = z - 1;
 
             AxisAlignedBB model = new AxisAlignedBB(this.x, -1.0, this.z, this.x+0.5, 2.0, this.z+0.5);
+            boundingBoxes = new ArrayList<>();
             boundingBoxes.addAll(Arrays.asList(
                     model,
                     model.offset(0.5, 0.0, 0.0),
