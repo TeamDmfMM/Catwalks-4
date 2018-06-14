@@ -8,5 +8,10 @@ pipeline {
         sh './gradlew build'
       }
     }
+    stage('Artifact') {
+      steps {
+        archiveArtifacts 'build/libs/*.jar'
+      }
+    }
   }
 }
