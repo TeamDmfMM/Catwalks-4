@@ -50,7 +50,7 @@ public class CableBlock extends GenericBlock {
             IBlockState west = world.getBlockState(pos.west());
             IBlockState north = world.getBlockState(pos.south());
             IBlockState south = world.getBlockState(pos.north());
-            Block toCheck = Blocks.STONE_SLAB;
+            Block toCheck = BlockRegistry.CATWALK;
 
             if(east.getBlock() == toCheck) {
                 theState = theState.withProperty(FACING, EnumFacing.EAST);
