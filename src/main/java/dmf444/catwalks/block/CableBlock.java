@@ -21,17 +21,13 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
 
-public class CableBlock extends Block {
+public class CableBlock extends GenericBlock {
 
 
 
 
     public CableBlock() {
-        super(Material.IRON);
-        this.setRegistryName(new ResourceLocation(Catwalks.MODID, "cable"));
-        this.setUnlocalizedName(Catwalks.MODID + "." + "cable");
-        this.setCreativeTab(GenericItem.INSTANCE);
-        BlockRegistry.BLOCKS.add(this);
+        super("cable");
     }
 
     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos)

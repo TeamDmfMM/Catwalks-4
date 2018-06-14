@@ -60,7 +60,7 @@ public class CatwalkModel implements IBakedModel{
     }
 
 
-    enum RailSection {
+    public enum RailSection {
         MIDDLE(0, 0),
         Z_EDGE(1, 0),
         Z_END(2, 0),
@@ -85,7 +85,7 @@ public class CatwalkModel implements IBakedModel{
         }
     }
 
-    enum FloorSection {
+    public enum FloorSection {
         MIDDLE(0, 0),
         Z_EDGE(1, 0),
         X_EDGE(0, 1),
@@ -106,44 +106,5 @@ public class CatwalkModel implements IBakedModel{
                     model.offset(0.0, 0.0, 0.5)
             ));
         }
-    }
-
-    class CatwalkState {
-
-        TIntSet layers;
-        List<RailSection> railSections;
-        List<FloorSection> floorSections;
-
-        private CatwalkState(List<RailSection> rail, List<FloorSection> floor, TIntSet layers) {
-            this.layers = layers;
-            this.floorSections = floor;
-            this.railSections = rail;
-        }
-
-        public CatwalkState(RailSection railNW, RailSection railNE, RailSection railSW, RailSection railSE,
-                            FloorSection floorNW, FloorSection floorNE, FloorSection floorSW, FloorSection floorSE, int layers) {
-            this(new ArrayList<RailSection>(Arrays.asList(railNW, railNE, railSW, railSE)), new ArrayList<FloorSection>(Arrays.asList(floorNW, floorNE, floorSW, floorSE)), new TIntHashSet(layers));
-        }
-
-        public boolean hasLayer(int layer) {
-            return this.layers.contains(layer);
-        }
-
-        @Override
-        public int hashCode(){
-            return 31 * (31 * railSections.hashCode() + floorSections.hashCode()) + layers.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if(this.hashCode() == o.hashCode()) return true;
-            if(!(o instanceof CatwalkState)) return false;
-
-            if(railSections != ((CatwalkState) o).railSections) return false;
-            if(floorSections != ((CatwalkState) o).floorSections) return false;
-            if(layers != ((CatwalkState) o).layers) return false;
-            return true;
-        }
-
     }
 }

@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 
 @Mod(modid = Catwalks.MODID, version = Catwalks.VERSION, name = Catwalks.MODNAME, acceptedMinecraftVersions = Catwalks.ALLOWED)
@@ -18,6 +19,8 @@ public class Catwalks {
     public static final String SERVER = "dmf444.catwalks.proxy.CommonProxy";
     public static final String DEPENDENCIES = "required-after:forge@[13.19.1.2195,)";
 
+    public static Side side;
+
     @Mod.Instance(value = Catwalks.MODID)
  	public static Catwalks instance;
 
@@ -28,6 +31,7 @@ public class Catwalks {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
+        side = e.getSide();
         proxy.pre(e);
     }
 
