@@ -19,6 +19,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
+import javax.vecmath.Tuple3f;
+import javax.vecmath.Vector3f;
 import java.util.List;
 import java.util.function.Function;
 
@@ -40,7 +42,11 @@ public class CableModel implements IBakedModel {
         this.cable_bottom = cable_bottom;
         ImmutableMap.Builder<EnumFacing, IBakedModel> b = ImmutableMap.builder();
         for (EnumFacing f : EnumFacing.HORIZONTALS) {
-            b.put(f, bake.bake(TRSRTransformation.from(f), format, bakedTextureGetter));
+            TRSRTransformation transformation = TRSRTransformation.from(f);
+            Vector3f trans = transformation.getTranslation();
+            trans.add(new Vector3f(0, 0.06f, 0));
+            transformation = new TRSRTransformation(trans, transformation.getLeftRot(), transformation.getScale(), transformation.getRightRot());
+            b.put(f, bake.bake(transformation, format, bakedTextureGetter));
         }
         cable_rotated = b.build();
     }

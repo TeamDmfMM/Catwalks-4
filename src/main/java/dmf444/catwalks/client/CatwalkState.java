@@ -21,7 +21,7 @@ public class CatwalkState {
 
     public CatwalkState(CatwalkModel.RailSection railNW, CatwalkModel.RailSection railNE, CatwalkModel.RailSection railSW, CatwalkModel.RailSection railSE,
                         CatwalkModel.FloorSection floorNW, CatwalkModel.FloorSection floorNE, CatwalkModel.FloorSection floorSW, CatwalkModel.FloorSection floorSE, int... layers) {
-        this(new ArrayList<CatwalkModel.RailSection>(Arrays.asList(railNW, railNE, railSW, railSE)), new ArrayList<CatwalkModel.FloorSection>(Arrays.asList(floorNW, floorNE, floorSW, floorSE)), new TIntHashSet(layers));
+        this(new ArrayList<CatwalkModel.RailSection>(Arrays.asList(railNW, railNE, railSE, railSW)), new ArrayList<CatwalkModel.FloorSection>(Arrays.asList(floorNW, floorNE, floorSE, floorSW)), new TIntHashSet(layers));
     }
 
     public boolean hasLayer(int layer) {

@@ -48,8 +48,8 @@ public class CableBlock extends GenericBlock {
 
             IBlockState east = world.getBlockState(pos.east());
             IBlockState west = world.getBlockState(pos.west());
-            IBlockState north = world.getBlockState(pos.south());
-            IBlockState south = world.getBlockState(pos.north());
+            IBlockState north = world.getBlockState(pos.north());
+            IBlockState south = world.getBlockState(pos.south());
             Block toCheck = BlockRegistry.CATWALK;
 
             if(east.getBlock() == toCheck) {

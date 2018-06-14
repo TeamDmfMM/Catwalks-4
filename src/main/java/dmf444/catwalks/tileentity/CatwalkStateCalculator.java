@@ -83,7 +83,7 @@ public class CatwalkStateCalculator {
         }
 
         if(has(zAxis)) {
-            if(exists(posX) && !has(xAxis.getOpposite().getOpposite(), posX)) {
+            if(exists(posX) && !has(xAxis.getOpposite(), posX)) {
                 if (has(zAxis, posX)) {
                     return CatwalkModel.RailSection.X_EDGE;
                 } else if(exists(corner) && has(xAxis.getOpposite(), corner) && !has(zAxis.getOpposite(), corner)) {
