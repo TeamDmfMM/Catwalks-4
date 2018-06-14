@@ -38,7 +38,6 @@ public class CatwalkModel implements IBakedModel{
             cw = new CatwalkState(RailSection.OUTER, RailSection.OUTER, RailSection.OUTER, RailSection.OUTER,
                                   FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, 0);
         }
-
         if(cache.containsKey(cw)){
             return cache.get(cw);
         } else {
@@ -46,15 +45,19 @@ public class CatwalkModel implements IBakedModel{
             List<BakedQuad> railQuads = rails.getQuads(state, side, rand);
             List<BakedQuad> floorQuads = floor.getQuads(state, side, rand);
 
-            Function<BakedQuad, Boolean> filter = (BakedQuad q) -> (!q.hasTintIndex() || cw.hasLayer(q.getTintIndex()));
+            CatwalkState finalCw = cw;
+            Function<BakedQuad, Boolean> filter = (BakedQuad q) -> (!q.hasTintIndex() || finalCw.hasLayer(q.getTintIndex()));
 
             for(int it=0; it < 4; it++){
                 Vec3d offset = new Vec3d(it == 1 || it == 2 ? 0.5 : 0.0, -1,
                                          it > 1 ? 0.5 : 0.0);
                 ModelSlicer.sliceInto(builder, railQuads, cw.railSections.get(it).boundingBoxes.get(it), offset, filter);
+                if (cw.floorSections.size() < it) continue;
+                ModelSlicer.sliceInto(builder, floorQuads, cw.railSections.get(it).boundingBoxes.get(it), offset, filter);
             }
 
-            return builder.build();
+            cache.put(cw, builder.build());
+            return cache.get(cw);
         }
 
     }
