@@ -2,8 +2,10 @@ package dmfmm.catwalks.proxy;
 
 import dmfmm.catwalks.client.CableModelLoader;
 import dmfmm.catwalks.client.CatwalkModelLoader;
+import dmfmm.catwalks.registry.BlockRegistry;
 import dmfmm.catwalks.registry.ItemRegistry;
 import dmfmm.catwalks.utils.ICustomModelLocation;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -43,6 +45,9 @@ public class ClientProxy extends CommonProxy{
             } else {
                 ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
             }
+        }
+        for(Block block: BlockRegistry.BLOCKS){
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
         }
     }
 

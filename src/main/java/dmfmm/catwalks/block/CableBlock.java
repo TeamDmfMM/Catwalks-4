@@ -4,12 +4,18 @@ import dmfmm.catwalks.registry.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 
 public class CableBlock extends GenericBlock {
@@ -19,6 +25,7 @@ public class CableBlock extends GenericBlock {
 
     public CableBlock() {
         super("cable");
+
     }
 
     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos)
@@ -64,8 +71,55 @@ public class CableBlock extends GenericBlock {
         return state;
     }
 
+    @Deprecated
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState)
+    {
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, this.getBoundingBox(state, worldIn, pos));
+    }
+
+
+    public static final AxisAlignedBB CABLE_BOX = new AxisAlignedBB(0.44, 0, 0.44, 0.56, 1, 0.56);
+    public static final AxisAlignedBB CLIP_BOX_NORTH_SOUTH = new AxisAlignedBB(0.23, 0, 0, 0.75, 0.13, 0.59);
+    public static final AxisAlignedBB CLIP_BOX_EAST_WEST = new AxisAlignedBB(0, 0, 0.23, 0.59, 0.13, 0.75);
+
+    @Deprecated
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        IBlockState estate = this.getExtendedState(state, source, pos);
+        if(estate instanceof IExtendedBlockState){
+            IExtendedBlockState estater = (IExtendedBlockState) estate;
+            if(estater.getValue(CONNECTED)){
+                switch (estater.getValue(FACING)){
+                    case NORTH:
+                        return CABLE_BOX.union(CLIP_BOX_NORTH_SOUTH);
+                    case SOUTH:
+                        return CABLE_BOX.union(CLIP_BOX_NORTH_SOUTH).offset(0, 0, 0.4);
+                    case EAST:
+                        return CABLE_BOX.union(CLIP_BOX_EAST_WEST).offset(0.4, 0, 0);
+                    case WEST:
+                        return CABLE_BOX.union(CLIP_BOX_EAST_WEST);
+
+                }
+            } else {
+                return CABLE_BOX;
+            }
+        }
+        return CABLE_BOX;
+    }
+
     @Override
     public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
+    {
+        return false;
+    }
+
+    @Deprecated
+    public boolean isFullCube(IBlockState state)
+    {
         return false;
     }
 
