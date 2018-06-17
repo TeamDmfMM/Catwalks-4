@@ -110,8 +110,7 @@ public class CatwalkStateCalculator {
         if(has(xAxis) && has(zAxis))
             return CatwalkModel.FloorSection.OUTER;
 
-        if(!has(xAxis) && !has(zAxis) && exists(posX) && has(EnumFacing.DOWN, posX) && !has(xAxis.getOpposite(), posX) && exists(posZ) && has(EnumFacing.DOWN, posZ) && !has(zAxis.getOpposite(), posZ)
-                ) {
+        if(!has(xAxis) && !has(zAxis) && exists(posX) && has(EnumFacing.DOWN, posX) && !has(xAxis.getOpposite(), posX) && exists(posZ) && has(EnumFacing.DOWN, posZ) && !has(zAxis.getOpposite(), posZ)) {
             if(exists(corner) && has(EnumFacing.DOWN, corner) && !has(xAxis.getOpposite(), corner) && !has(zAxis.getOpposite(), corner))
                 return CatwalkModel.FloorSection.MIDDLE;
             return CatwalkModel.FloorSection.INNER;

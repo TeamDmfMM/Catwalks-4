@@ -51,7 +51,7 @@ public class CatwalkModel implements IBakedModel{
                 Vec3d offset = new Vec3d(it == 1 || it == 2 ? 0.5 : 0.0, -1,
                                          it > 1 ? 0.5 : 0.0);
                 ModelSlicer.sliceInto(builder, railQuads, cw.railSections.get(it).boundingBoxes.get(it), offset, filter);
-                if (cw.floorSections.size() < it) continue;
+                if (cw.floorSections.get(it) == null) continue;
                 ModelSlicer.sliceInto(builder, floorQuads, cw.railSections.get(it).boundingBoxes.get(it), offset, filter);
             }
 
