@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CatwalkTile extends TileEntity {
+public class CatwalkTile extends TileEntity implements IConnectTile{
 
     Map<EnumFacing, Boolean> sides = new HashMap<>();
     CatwalkMaterial material = CatwalkMaterial.CLASSIC;

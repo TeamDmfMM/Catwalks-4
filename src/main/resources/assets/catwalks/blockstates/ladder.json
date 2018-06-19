@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "catwalks:ladder/classic!!catwalks:ladder"
+    },
+    "material=classic": {
+      "model": "catwalks:ladder/classic!!catwalks:ladder"
+    }
+  }
+}

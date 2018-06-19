@@ -2,6 +2,7 @@ package dmfmm.catwalks.proxy;
 
 import dmfmm.catwalks.client.CableModelLoader;
 import dmfmm.catwalks.client.CatwalkModelLoader;
+import dmfmm.catwalks.client.LadderModelLoader;
 import dmfmm.catwalks.registry.BlockRegistry;
 import dmfmm.catwalks.registry.ItemRegistry;
 import dmfmm.catwalks.utils.ICustomModelLocation;
@@ -26,6 +27,7 @@ public class ClientProxy extends CommonProxy{
         MinecraftForge.EVENT_BUS.register(this);
         ModelLoaderRegistry.registerLoader(new CableModelLoader());
         ModelLoaderRegistry.registerLoader(new CatwalkModelLoader());
+        ModelLoaderRegistry.registerLoader(new LadderModelLoader());
     }
 
     public void init(FMLInitializationEvent e) {

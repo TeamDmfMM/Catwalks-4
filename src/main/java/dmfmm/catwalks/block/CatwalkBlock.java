@@ -1,6 +1,7 @@
 package dmfmm.catwalks.block;
 
 import dmfmm.catwalks.item.ItemBlockCatwalk;
+import dmfmm.catwalks.tileentity.IConnectTile;
 import dmfmm.catwalks.utils.CatwalkMaterial;
 import dmfmm.catwalks.Catwalks;
 import dmfmm.catwalks.client.CatwalkState;
@@ -145,6 +146,9 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
                 TileEntity other = world.getTileEntity(pos.offset(facing));
                 if(other instanceof CatwalkTile) {
                     ((CatwalkTile) other).updateSide(facing.getOpposite(), false);
+                    tile.updateSide(facing, false);
+                }
+                if(other instanceof IConnectTile) {
                     tile.updateSide(facing, false);
                 }
             }

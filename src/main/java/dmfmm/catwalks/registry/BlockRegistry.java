@@ -3,9 +3,12 @@ package dmfmm.catwalks.registry;
 import dmfmm.catwalks.Catwalks;
 import dmfmm.catwalks.block.CableBlock;
 import dmfmm.catwalks.block.CatwalkBlock;
+import dmfmm.catwalks.block.LadderBlock;
 import dmfmm.catwalks.tileentity.CatwalkTile;
+import dmfmm.catwalks.tileentity.LadderTile;
 import dmfmm.catwalks.utils.ICustomItemBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLadder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -23,12 +26,14 @@ public class BlockRegistry {
 
     public static final Block CABLE = new CableBlock();
     public static final Block CATWALK = new CatwalkBlock();
+    public static final Block LADDER = new LadderBlock();
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         BLOCKS.forEach(event.getRegistry()::register);
 
         GameRegistry.registerTileEntity(CatwalkTile.class, new ResourceLocation(Catwalks.MODID, "catwalks"));
+        GameRegistry.registerTileEntity(LadderTile.class, new ResourceLocation(Catwalks.MODID, "ladder"));
     }
 
     @SubscribeEvent
