@@ -1,6 +1,7 @@
 package dmfmm.catwalks.block;
 
 import dmfmm.catwalks.item.ItemBlockCatwalk;
+import dmfmm.catwalks.tileentity.CatwalkStateCalculator;
 import dmfmm.catwalks.tileentity.IConnectTile;
 import dmfmm.catwalks.utils.CatwalkMaterial;
 import dmfmm.catwalks.Catwalks;
@@ -9,6 +10,7 @@ import dmfmm.catwalks.registry.ItemRegistry;
 import dmfmm.catwalks.tileentity.CatwalkTile;
 import dmfmm.catwalks.utils.ICustomItemBlock;
 import javafx.util.Pair;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyEnum;
@@ -166,6 +168,13 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
                 ((CatwalkTile) other).updateSide(facing.getOpposite(), true);
             }
         }
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
+    {
+        super.breakBlock(world, pos, state);
+        CatwalkStateCalculator.removeFromCache(pos);
     }
 
     @Override

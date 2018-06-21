@@ -15,6 +15,12 @@ import java.util.HashMap;
 public class CatwalkStateCalculator {
 
     static HashMap<Long, CatwalkTile> tileCache = new HashMap<>();
+
+    public static void removeFromCache(BlockPos pos){
+        if(tileCache.containsKey(pos.toLong())){
+            tileCache.remove(pos.toLong());
+        }
+    }
     World world;
     BlockPos pos;
 

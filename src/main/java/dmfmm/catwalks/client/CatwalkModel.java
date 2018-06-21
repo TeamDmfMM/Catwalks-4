@@ -37,9 +37,9 @@ public class CatwalkModel implements IBakedModel{
             cw = new CatwalkState(RailSection.OUTER, RailSection.OUTER, RailSection.OUTER, RailSection.OUTER,
                                   FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, 0);
         }
-        if(cache.containsKey(cw)){
-            return cache.get(cw);
-        } else {
+        //if(cache.containsKey(cw)){
+        //    return cache.get(cw);
+        //} else {
             ImmutableList.Builder<BakedQuad> builder = new ImmutableList.Builder<>();
             List<BakedQuad> railQuads = rails.getQuads(state, side, rand);
             List<BakedQuad> floorQuads = floor.getQuads(state, side, rand);
@@ -52,12 +52,12 @@ public class CatwalkModel implements IBakedModel{
                                          it > 1 ? 0.5 : 0.0);
                 ModelSlicer.sliceInto(builder, railQuads, cw.railSections.get(it).boundingBoxes.get(it), offset, filter);
                 if (cw.floorSections.get(it) == null) continue;
-                ModelSlicer.sliceInto(builder, floorQuads, cw.railSections.get(it).boundingBoxes.get(it), offset, filter);
+                ModelSlicer.sliceInto(builder, floorQuads, cw.floorSections.get(it).boundingBoxes.get(it), offset, filter);
             }
 
             cache.put(cw, builder.build());
             return cache.get(cw);
-        }
+        //}
 
     }
 
