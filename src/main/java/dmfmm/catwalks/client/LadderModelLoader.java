@@ -34,9 +34,9 @@ public class LadderModelLoader implements ICustomModelLoader{
 
     public static class LadderModelWrapper implements IModel {
         static ResourceLocation ladder, side_bar, connectionRight, connectionLeft, wrap, base, secondPole, baseConnected;
-        static ResourceLocation connectionRightBig, connectionLeftBig, wrapBig, ladderTop;
+        static ResourceLocation connectionRightBig, connectionLeftBig, wrapBig, ladderTop, mergeLeft, mergeRight;
         static IModel bakedLadder, bakedSideBar, bakedConnectionRight, bakedConnectionLeft, bakedWrap, bakedBase, bakedSecondPole, bakedBaseConnected;
-        static IModel bakedRightBig, bakedLeftBig, bakedWrapBig, bakedLadderTop;
+        static IModel bakedRightBig, bakedLeftBig, bakedWrapBig, bakedLadderTop, bakedMergeLeft, bakedMergeRight;
 
         LadderModelWrapper(String path){
             ladder = new ResourceLocation(Catwalks.MODID, path + "/ladder");
@@ -51,12 +51,14 @@ public class LadderModelLoader implements ICustomModelLoader{
             connectionRightBig = new ResourceLocation(Catwalks.MODID,path + "/right_connect_large");
             wrapBig = new ResourceLocation(Catwalks.MODID,path + "/round_corner_large");
             ladderTop = new ResourceLocation(Catwalks.MODID,path + "/ladder_top");
+            mergeLeft = new ResourceLocation(Catwalks.MODID,path + "/left_merge_large");
+            mergeRight = new ResourceLocation(Catwalks.MODID,path + "/right_merge_large");
         }
 
 
         @Override
         public Collection<ResourceLocation> getDependencies() {
-            return ImmutableList.of(ladder, side_bar, connectionRight, connectionLeft, wrap, base, secondPole, baseConnected, connectionLeftBig, connectionRightBig, wrapBig, ladderTop);
+            return ImmutableList.of(ladder, side_bar, connectionRight, connectionLeft, wrap, base, secondPole, baseConnected, connectionLeftBig, connectionRightBig, wrapBig, ladderTop, mergeLeft, mergeRight);
         }
 
         @Override
@@ -74,6 +76,8 @@ public class LadderModelLoader implements ICustomModelLoader{
                 bakedRightBig = ModelLoaderRegistry.getModelOrMissing(connectionRightBig);
                 bakedWrapBig = ModelLoaderRegistry.getModelOrMissing(wrapBig);
                 bakedLadderTop = ModelLoaderRegistry.getModelOrMissing(ladderTop);
+                bakedMergeLeft = ModelLoaderRegistry.getModelOrMissing(mergeLeft);
+                bakedMergeRight = ModelLoaderRegistry.getModelOrMissing(mergeRight);
 
             }
             return new LadderModel(
@@ -89,6 +93,8 @@ public class LadderModelLoader implements ICustomModelLoader{
                     bakedRightBig,
                     bakedWrapBig,
                     bakedLadderTop,
+                    bakedMergeLeft,
+                    bakedMergeRight,
                     format,
                     bakedTextureGetter
             );

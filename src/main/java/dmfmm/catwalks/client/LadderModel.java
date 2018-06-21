@@ -35,9 +35,11 @@ public class LadderModel implements IBakedModel {
     private ImmutableMap<EnumFacing, IBakedModel> rotatedBigRight;
     private ImmutableMap<EnumFacing, IBakedModel> rotatedBigWrap;
     private ImmutableMap<EnumFacing, IBakedModel> rotatedLadderTop;
+    private ImmutableMap<EnumFacing, IBakedModel> rotatedMergeLeft;
+    private ImmutableMap<EnumFacing, IBakedModel> rotatedMergeRight;
 
     public LadderModel(IModel ladder, IModel side, IModel connectionRight, IModel connectionLeft, IModel wrap, IModel base, IModel secondPole, IModel connectedBase,
-                       IModel bigLeft, IModel bigRight, IModel bigWrap, IModel ladderTop, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter){
+                       IModel bigLeft, IModel bigRight, IModel bigWrap, IModel ladderTop, IModel mergeLeft, IModel mergeRight, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter){
         ImmutableMap.Builder<EnumFacing, IBakedModel> sideBuilder = ImmutableMap.builder();
         ImmutableMap.Builder<EnumFacing, IBakedModel> ladderBuilder = ImmutableMap.builder();
         ImmutableMap.Builder<EnumFacing, IBakedModel> wrapBuilder = ImmutableMap.builder();
@@ -50,6 +52,8 @@ public class LadderModel implements IBakedModel {
         ImmutableMap.Builder<EnumFacing, IBakedModel> bigRightBuilder = ImmutableMap.builder();
         ImmutableMap.Builder<EnumFacing, IBakedModel> bigWrapBuilder = ImmutableMap.builder();
         ImmutableMap.Builder<EnumFacing, IBakedModel> ladderTopBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<EnumFacing, IBakedModel> mergeLeftBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<EnumFacing, IBakedModel> mergeRightBuilder = ImmutableMap.builder();
 
         for (EnumFacing facing: EnumFacing.HORIZONTALS) {
             TRSRTransformation transformation = TRSRTransformation.from(facing);
@@ -65,7 +69,8 @@ public class LadderModel implements IBakedModel {
             bigRightBuilder.put(facing, bigRight.bake(transformation, format, bakedTextureGetter));
             bigWrapBuilder.put(facing, bigWrap.bake(transformation, format, bakedTextureGetter));
             ladderTopBuilder.put(facing, ladderTop.bake(transformation, format, bakedTextureGetter));
-
+            mergeLeftBuilder.put(facing, mergeLeft.bake(transformation, format, bakedTextureGetter));
+            mergeRightBuilder.put(facing, mergeRight.bake(transformation, format, bakedTextureGetter));
 
             //Non-connected base plate raised
             Vector3f t = transformation.getTranslation();
@@ -86,6 +91,8 @@ public class LadderModel implements IBakedModel {
         rotatedBigRight = bigRightBuilder.build();
         rotatedBigWrap = bigWrapBuilder.build();
         rotatedLadderTop = ladderTopBuilder.build();
+        rotatedMergeLeft = mergeLeftBuilder.build();
+        rotatedMergeRight = mergeRightBuilder.build();
 
     }
 
@@ -140,11 +147,14 @@ public class LadderModel implements IBakedModel {
                     //Thick top cage
                     bq.addAll(rotatedBigWrap.get(facing.getOpposite()).getQuads(state, side, rand));
                     bq.addAll(rotatedBigWrap.get(facing.rotateYCCW()).getQuads(state, side, rand));
-                    bq.addAll(rotatedBigRight.get(facing.rotateYCCW()).getQuads(state, side, rand));
-                    bq.addAll(rotatedBigLeft.get(facing.rotateY()).getQuads(state, side, rand));
+
                     if(isConnected){
                         bq.addAll(rotatedLadderTop.get(facing).getQuads(state, side, rand));
+                        bq.addAll(rotatedMergeRight.get(facing.rotateYCCW()).getQuads(state, side, rand));
+                        bq.addAll(rotatedMergeLeft.get(facing.rotateY()).getQuads(state, side, rand));
                     } else {
+                        bq.addAll(rotatedBigRight.get(facing.rotateYCCW()).getQuads(state, side, rand));
+                        bq.addAll(rotatedBigLeft.get(facing.rotateY()).getQuads(state, side, rand));
                         //Simple Ladder
                         bq.addAll(rotatedLadder.get(facing).getQuads(state, side, rand));
                         bq.addAll(rotatedSide.get(facing).getQuads(state, side, rand));
