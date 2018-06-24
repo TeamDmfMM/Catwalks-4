@@ -49,7 +49,13 @@ public class ClientProxy extends CommonProxy{
             }
         }
         for(Block block: BlockRegistry.BLOCKS){
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+            Item item = Item.getItemFromBlock(block);
+            if(item instanceof ICustomModelLocation){
+                ((ICustomModelLocation) item).getCustomModelLocation();
+            } else {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+            }
+
         }
     }
 

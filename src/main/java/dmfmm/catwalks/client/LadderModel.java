@@ -103,7 +103,7 @@ public class LadderModel implements IBakedModel {
             IExtendedBlockState ext = (IExtendedBlockState) state;
             LadderBlock.LadderState ladderState = ext.getValue(LadderBlock.STATE);
 
-            EnumFacing facing = EnumFacing.NORTH;
+            EnumFacing facing = ext.getValue(LadderBlock.FACING);
             switch(ladderState){
                 case MIDDLE:
                     boolean hasCage = ext.getValue(LadderBlock.HAS_CAGE);

@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -43,13 +44,27 @@ public class LadderBlock extends GenericBlock implements ITileEntityProvider{
         TileEntity tileEntity = world.getTileEntity(pos);
         if(!(tileEntity instanceof LadderTile))
             return false;
-        if(facing == EnumFacing.NORTH && world.getTileEntity(pos.offset(EnumFacing.NORTH)) instanceof IConnectTile){
+        EnumFacing tileFacing = ((LadderTile) tileEntity).getFacing();
+        if(facing == tileFacing && world.getTileEntity(pos.offset(facing)) instanceof IConnectTile){
             ((LadderTile) tileEntity).setHasConnection(!((LadderTile) tileEntity).doesHaveConnection());
-        }else if(facing == EnumFacing.NORTH.getOpposite()){
+        }else if(facing == tileFacing.getOpposite()){
             ((LadderTile) tileEntity).setHasCage(!((LadderTile) tileEntity).doesHaveCage());
         }
         world.notifyBlockUpdate(pos, state, state, 2);
         return true;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
+        super.onBlockPlacedBy(world, pos, state, entity, stack);
+        TileEntity te = world.getTileEntity(pos);
+        if(te instanceof LadderTile){
+            EnumFacing f = EnumFacing.getDirectionFromEntityLiving(pos, entity).getOpposite();
+            if(f == EnumFacing.UP || f == EnumFacing.DOWN){
+                f = EnumFacing.NORTH;
+            }
+            ((LadderTile) te).setFacing(f);
+        }
     }
 
     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos)
@@ -63,8 +78,10 @@ public class LadderBlock extends GenericBlock implements ITileEntityProvider{
 
             if(te instanceof LadderTile){
                 theState = theState.withProperty(HAS_CAGE, ((LadderTile) te).doesHaveCage());
+                theState = theState.withProperty(FACING, ((LadderTile) te).getFacing());
             } else {
                 theState = theState.withProperty(HAS_CAGE, true);
+                theState = theState.withProperty(FACING, EnumFacing.NORTH);
             }
 
 
@@ -105,7 +122,8 @@ public class LadderBlock extends GenericBlock implements ITileEntityProvider{
 
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return new AxisAlignedBB(0.1, 0, 0.85, 0.9, 1, 0.90);
+        return FULL_BLOCK_AABB;
+        //new AxisAlignedBB(0.1, 0, 0.85, 0.9, 1, 0.90);
         //new AxisAlignedBB(0.0, 0, 0.01, 0.06, 1, 0.64);
     }
 
@@ -165,7 +183,7 @@ public class LadderBlock extends GenericBlock implements ITileEntityProvider{
 
     @Override
     public BlockStateContainer createBlockState() {
-        return new BlockStateContainer.Builder(this).add(CONNECTED).add(HAS_CAGE).add(STATE).build();
+        return new BlockStateContainer.Builder(this).add(CONNECTED).add(HAS_CAGE).add(STATE).add(FACING).build();
     }
 
     public static final IUnlistedProperty<Boolean> HAS_CAGE = new IUnlistedProperty<Boolean>() {
@@ -233,6 +251,28 @@ public class LadderBlock extends GenericBlock implements ITileEntityProvider{
 
         @Override
         public String valueToString(LadderState value) {
+            return value.toString().toLowerCase();
+        }
+    };
+
+    public static final IUnlistedProperty<EnumFacing> FACING = new IUnlistedProperty<EnumFacing>() {
+        @Override
+        public String getName() {
+            return "facing";
+        }
+
+        @Override
+        public boolean isValid(EnumFacing value) {
+            return true;
+        }
+
+        @Override
+        public Class<EnumFacing> getType() {
+            return EnumFacing.class;
+        }
+
+        @Override
+        public String valueToString(EnumFacing value) {
             return value.toString().toLowerCase();
         }
     };

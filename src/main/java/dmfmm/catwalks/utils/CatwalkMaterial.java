@@ -3,7 +3,8 @@ package dmfmm.catwalks.utils;
 import net.minecraft.util.IStringSerializable;
 
 public enum  CatwalkMaterial implements IStringSerializable {
-    CLASSIC;
+    CLASSIC,
+    MAGNETICRAFT_STEEL;
 
     @Override
     public String getName() {
