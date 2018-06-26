@@ -3,7 +3,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"sides": "catwalks:blocks/catwalk/glass/sides",
-		"base": "catwalks:blocks/catwalk/glass/base"
+		"base": "catwalks:blocks/catwalk/glass/base",
+		"particle": "catwalks:blocks/catwalk/glass/sides"
 	},
 	"elements": [
 		{
