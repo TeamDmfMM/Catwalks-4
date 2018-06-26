@@ -1,6 +1,7 @@
 package dmfmm.catwalks.item;
 
 import dmfmm.catwalks.Catwalks;
+import dmfmm.catwalks.registry.BlockRegistry;
 import dmfmm.catwalks.registry.ItemRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -30,7 +31,7 @@ public class GenericItem extends Item {
 
         @Override
         public ItemStack getTabIconItem() {
-            return new ItemStack(Items.BANNER);
+            return new ItemStack(Item.getItemFromBlock(BlockRegistry.CATWALK));
         }
     }
 

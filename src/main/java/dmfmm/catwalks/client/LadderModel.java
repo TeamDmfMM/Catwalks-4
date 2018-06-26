@@ -183,7 +183,7 @@ public class LadderModel implements IBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleTexture() {
-        return null;
+        return rotatedBase.get(EnumFacing.NORTH).getParticleTexture();
     }
 
     @Override

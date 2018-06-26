@@ -5,3 +5,5 @@ itemGroup.catwalks=Catwalks
 item.catwalks.blowtorch.name=Blowtorch
 tile.catwalks.cable.name=Classic Support Cables
 tile.catwalks.catwalk.classic.name=Classic Catwalk
+tile.catwalks.ladder.name=Classic Ladder
+tile.catwalks.catwalk.magneticraft_steel.name=Steel Catwalk

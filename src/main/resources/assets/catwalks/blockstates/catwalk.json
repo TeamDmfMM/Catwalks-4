@@ -5,6 +5,12 @@
     },
     "material=magneticraft_steel": {
       "model": "catwalks:catwalk/magneticraft_steel!!catwalks:catwalk"
+    },
+    "material=glass": {
+      "model": "catwalks:catwalk/glass!!catwalks:catwalk"
+    },
+    "material=custom_0": {
+      "model": "catwalks:catwalk/custom_0!!catwalks:catwalk"
     }
   }
 }
