@@ -1,5 +1,6 @@
 package dmfmm.catwalks.tileentity;
 
+import dmfmm.catwalks.utils.NBTBuilder;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -68,10 +69,7 @@ public class LadderTile extends TileEntity implements IConnectTile{
     @Nullable
     public SPacketUpdateTileEntity getUpdatePacket()
     {
-        NBTTagCompound syncPacket = new NBTTagCompound();
-        syncPacket.setBoolean("cage", hasCage);
-        syncPacket.setBoolean("direction", hasConnection);
-        syncPacket.setString("facing", this.facing.getName().toLowerCase());
+        NBTTagCompound syncPacket = new NBTBuilder().add("cage", hasCage).add("direction", hasConnection).add("facing", this.facing).build();
         return new SPacketUpdateTileEntity(this.getPos(), 0, syncPacket);
     }
 
