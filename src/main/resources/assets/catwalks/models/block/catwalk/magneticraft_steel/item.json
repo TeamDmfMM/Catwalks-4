@@ -4,7 +4,8 @@
 	"textures": {
 		"3": "catwalks:blocks/catwalk/magneticraft_steel/steel_catwalk_floor_full_grid",
 		"4": "catwalks:blocks/catwalk/magneticraft_steel/steel_catwalk_floor_side",
-		"2_0": "catwalks:blocks/catwalk/magneticraft_steel/steel_catwalk_rail"
+		"2_0": "catwalks:blocks/catwalk/magneticraft_steel/steel_catwalk_rail",
+		"particle": "catwalks:blocks/catwalk/magneticraft_steel/steel_catwalk_rail"
 	},
 	"elements": [
 		{
