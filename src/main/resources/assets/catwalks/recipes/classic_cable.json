@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "catwalks:cable",
+    "count": 6
+  },
+  "pattern": [
+    "pi",
+    "pi"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:iron_bars"
+    },
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    }
+  }
+}

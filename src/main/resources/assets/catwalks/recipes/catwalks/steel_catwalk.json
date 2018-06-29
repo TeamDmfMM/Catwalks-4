@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "catwalks:catwalk",
+    "count": 4
+  },
+  "pattern": [
+    "iii",
+    "iwi"
+  ],
+  "type": "catwalks:nbt_craft",
+  "material": "magneticraft_steel",
+  "key": {
+    "w": {
+      "item": "minecraft:iron_bars"
+    },
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    }
+  }
+}

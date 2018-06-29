@@ -11,6 +11,9 @@
     },
     "material=custom_0": {
       "model": "catwalks:catwalk/custom_0/item"
+    },
+    "material=treated_wood": {
+      "model": "catwalks:catwalk/treated_wood/item"
     }
   }
 }

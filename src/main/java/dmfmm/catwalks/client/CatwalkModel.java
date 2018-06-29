@@ -21,7 +21,8 @@ import java.util.function.Function;
 public class CatwalkModel implements IBakedModel{
 
     IBakedModel item, rails, floor;
-    static Map<CatwalkState, List<BakedQuad>> cache = new HashMap<>();
+    //static Map<CatwalkState, List<BakedQuad>> cache = new HashMap<>();
+    static Map<String, Map<CatwalkState, List<BakedQuad>>> cache2 = new HashMap<>();
 
     public CatwalkModel(IBakedModel item, IBakedModel rails, IBakedModel floor) {
         this.item = item;
@@ -32,16 +33,28 @@ public class CatwalkModel implements IBakedModel{
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
         CatwalkState cw = null;
+        String material = "classic";
         if(state instanceof IExtendedBlockState){
             cw = ((IExtendedBlockState) state).getValue(CatwalkBlock.CATWALK_STATE);
+            material = ((IExtendedBlockState) state).getValue(CatwalkBlock.MATERIAL).getName().toLowerCase();
         }
         if (cw == null) {
             cw = new CatwalkState(RailSection.OUTER, RailSection.OUTER, RailSection.OUTER, RailSection.OUTER,
                                   FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, 0);
         }
-        if(cache.containsKey(cw)){
-            return cache.get(cw);
+
+        if(cache2.containsKey(material)){
+            Map<CatwalkState, List<BakedQuad>> map = cache2.get(material);
+            if(map.containsKey(cw)){
+                return map.get(cw);
+            }
         } else {
+            Map<CatwalkState, List<BakedQuad>> m = new HashMap<>();
+            cache2.put(material, m);
+        }
+        //if(cache.containsKey(cw)){
+        //    return cache.get(cw);
+        //} else {
             ImmutableList.Builder<BakedQuad> builder = new ImmutableList.Builder<>();
             List<BakedQuad> railQuads = rails.getQuads(state, side, rand);
             List<BakedQuad> floorQuads = floor.getQuads(state, side, rand);
@@ -56,10 +69,12 @@ public class CatwalkModel implements IBakedModel{
                 if (cw.floorSections.get(it) == null) continue;
                 ModelSlicer.sliceInto(builder, floorQuads, cw.floorSections.get(it).boundingBoxes.get(it), offset, filter);
             }
+            cache2.get(material).put(cw, builder.build());
+            return cache2.get(material).get(cw);
 
-            cache.put(cw, builder.build());
-            return cache.get(cw);
-        }
+            /*cache.put(cw, builder.build());
+            return cache.get(cw);*/
+       // }
 
     }
 

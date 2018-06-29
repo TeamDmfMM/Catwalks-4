@@ -158,8 +158,7 @@ public class CatwalkLegacyModel implements IBakedModel{
 
     @Override
     public TextureAtlasSprite getParticleTexture() {
-        //TODO
-        return null;
+        return modelPieces.get("bottom").get(EnumFacing.NORTH).getParticleTexture();
     }
 
     @Override
