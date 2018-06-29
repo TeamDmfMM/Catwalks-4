@@ -76,6 +76,8 @@ public class CatwalkLegacyModel implements IBakedModel{
 
         for(int i=0; i < 4; i++){
             CatwalkModel.RailSection rail = cw.railSections.get(i);
+            String siding;
+            EnumFacing facing;
             switch (rail){
                 case OUTER:
                     bq.addAll(modelPieces.get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
@@ -86,32 +88,52 @@ public class CatwalkLegacyModel implements IBakedModel{
                     bq.addAll(modelPieces.get("corner_inner").get(facingFromInt(i)).getQuads(state, side, rand));
                     break;
                 case Z_EDGE:
-                    //bq.addAll(modelPieces.get("right_merge").get(facingFromInt(i)).getQuads(state, side, rand));
+                    siding = i % 2 == 0 ? "right" : "left";
+                    facing = i == 1 || i == 2 ? EnumFacing.EAST : EnumFacing.WEST;
+                    bq.addAll(modelPieces.get(siding + "_connect").get(facing).getQuads(state, side, rand));
+                    /*if(i == 0){
+                        bq.addAll(modelPieces.get("right_connect").get(EnumFacing.WEST).getQuads(state, side, rand));
+                    }else if(i == 1){
+                        bq.addAll(modelPieces.get("left_connect").get(EnumFacing.EAST).getQuads(state, side, rand));
+                    } else if(i == 2){
+                        bq.addAll(modelPieces.get("right_connect").get(EnumFacing.EAST).getQuads(state, side, rand));
+                    }else {
+                        bq.addAll(modelPieces.get("left_connect").get(EnumFacing.WEST).getQuads(state, side, rand));
+                    }*/
                     break;
                 case X_END:
                     bq.addAll(modelPieces.get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
                     if(i == 0){
-                        bq.addAll(modelPieces.get("right_merge").get(EnumFacing.SOUTH).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get("left_merge").get(EnumFacing.NORTH).getQuads(state, side, rand));
                     } else if(i == 1){
                         bq.addAll(modelPieces.get("right_merge").get(EnumFacing.NORTH).getQuads(state, side, rand));
                     } else if(i == 2){
                         bq.addAll(modelPieces.get("left_merge").get(EnumFacing.SOUTH).getQuads(state, side, rand));
                     } else {
-                        bq.addAll(modelPieces.get("left_merge").get(EnumFacing.NORTH).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get("right_merge").get(EnumFacing.SOUTH).getQuads(state, side, rand));
                     }
                     break;
                 case Z_END:
-                    //bq.addAll(modelPieces.get("corner_outer").get(facingFromInt(i).rotateYCCW()).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
+                    if(i == 0) {
+                        bq.addAll(modelPieces.get("right_merge").get(EnumFacing.WEST).getQuads(state, side, rand));
+                    } else if(i == 1){
+                        bq.addAll(modelPieces.get("left_merge").get(EnumFacing.EAST).getQuads(state, side, rand));
+                    } else if(i == 2){
+                        bq.addAll(modelPieces.get("right_merge").get(EnumFacing.EAST).getQuads(state, side, rand));
+                    }else {
+                        bq.addAll(modelPieces.get("left_merge").get(EnumFacing.WEST).getQuads(state, side, rand));
+                    }
                     break;
                 case X_EDGE:
                     if(i == 0){
-                        bq.addAll(modelPieces.get("right_merge").get(EnumFacing.SOUTH).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get("left_connect").get(EnumFacing.NORTH).getQuads(state, side, rand));
                     } else if(i == 1){
-                        bq.addAll(modelPieces.get("right_merge").get(EnumFacing.NORTH).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get("right_connect").get(EnumFacing.NORTH).getQuads(state, side, rand));
                     } else if(i == 2){
-                        bq.addAll(modelPieces.get("left_merge").get(EnumFacing.SOUTH).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get("left_connect").get(EnumFacing.SOUTH).getQuads(state, side, rand));
                     } else {
-                        bq.addAll(modelPieces.get("left_merge").get(EnumFacing.NORTH).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get("right_connect").get(EnumFacing.SOUTH).getQuads(state, side, rand));
                     }
                     break;
                 case MIDDLE:

@@ -43,9 +43,9 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
     class CatwalkLegacyModelWrapper implements IModel {
 
         ResourceLocation bottom, bottom_corner, bottom_edge;
-        ResourceLocation corner_outer, right_merge, left_merge, corner_inner;
+        ResourceLocation corner_outer, right_merge, left_merge, corner_inner, left_connect, right_connect;
         IModel modelbottom, modelBottomCorner, modelBottomEdge;
-        IModel modelOuterCorner, modelLeftMerge, modelRightMerge, modelInner;
+        IModel modelOuterCorner, modelLeftMerge, modelRightMerge, modelInner, modelLeftConnect, modelRightConnect;
         boolean match;
 
 
@@ -57,6 +57,8 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
             right_merge = new ResourceLocation(domain, path + "/right_merge" + postfix);
             left_merge = new ResourceLocation(domain, path + "/left_merge" + postfix);
             corner_inner = new ResourceLocation(domain, path + "/corner_inner" + postfix);
+            left_connect = new ResourceLocation(domain, path + "/left_connect" + postfix);
+            right_connect = new ResourceLocation(domain, path + "/right_connect" + postfix);
 
         }
 
@@ -73,7 +75,7 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
 
         @Override
         public Collection<ResourceLocation> getDependencies() {
-            return ImmutableList.of(bottom, bottom_corner, bottom_edge, corner_outer, right_merge, left_merge, corner_inner);
+            return ImmutableList.of(bottom, bottom_corner, bottom_edge, corner_outer, right_merge, left_merge, corner_inner, left_connect, right_connect);
         }
 
         @Override
@@ -86,6 +88,8 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
                 modelLeftMerge = ModelLoaderRegistry.getModelOrMissing(left_merge);
                 modelRightMerge = ModelLoaderRegistry.getModelOrMissing(right_merge);
                 modelInner = ModelLoaderRegistry.getModelOrMissing(corner_inner);
+                modelLeftConnect = ModelLoaderRegistry.getModelOrMissing(left_connect);
+                modelRightConnect = ModelLoaderRegistry.getModelOrMissing(right_connect);
             }
             Map<String, IModel> models = new HashMap<>();
             models.put("bottom", modelbottom);
@@ -95,6 +99,8 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
             models.put("left_merge", modelLeftMerge);
             models.put("right_merge", modelRightMerge);
             models.put("corner_inner", modelInner);
+            models.put("left_connect", modelLeftConnect);
+            models.put("right_connect", modelRightConnect);
 
             return new CatwalkLegacyModel(
                     match,
