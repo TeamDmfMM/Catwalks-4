@@ -280,4 +280,19 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
     public ItemBlock getCustomItemBlock() {
         return new ItemBlockCatwalk();
     }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof CatwalkTile) {
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setString("material", ((CatwalkTile) tileEntity).getMaterial().getName());
+            ItemStack is = new ItemStack(this, 1);
+            is.setTagCompound(nbt);
+            return is;
+        }
+        else {
+            return super.getPickBlock(state, target, world, pos, player);
+        }
+    }
 }
