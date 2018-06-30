@@ -4,6 +4,7 @@ import dmfmm.catwalks.Catwalks;
 import dmfmm.catwalks.block.CableBlock;
 import dmfmm.catwalks.block.CatwalkBlock;
 import dmfmm.catwalks.block.LadderBlock;
+import dmfmm.catwalks.block.StairBlock;
 import dmfmm.catwalks.tileentity.CatwalkTile;
 import dmfmm.catwalks.tileentity.LadderTile;
 import dmfmm.catwalks.utils.ICustomItemBlock;
@@ -27,6 +28,7 @@ public class BlockRegistry {
     public static final Block CABLE = new CableBlock();
     public static final Block CATWALK = new CatwalkBlock();
     public static final Block LADDER = new LadderBlock();
+    public static final Block STAIR = new StairBlock();
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {

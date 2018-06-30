@@ -1,0 +1,32 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "catwalks:dummy!catwalks:stair"
+  },
+  "variants": {
+    "normal": [{
+      "custom": {"dir": "north"}
+    }],
+    "inventory": [{
+      "custom": {"dir": "north"}
+    }],
+    "facing": {
+      "north": {
+        "custom": {"dir": "north"},
+        "x": 180
+      },
+      "east": {
+        "custom": {"dir": "east"},
+        "x": 270
+      },
+      "west": {
+        "custom": {"dir": "west"},
+        "x": 90
+      },
+      "south": {
+        "custom": {"dir": "south"},
+        "x": 0
+      }
+    }
+  }
+}

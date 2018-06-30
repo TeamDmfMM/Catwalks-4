@@ -3,6 +3,7 @@ package dmfmm.catwalks.proxy;
 import dmfmm.catwalks.client.CableModelLoader;
 import dmfmm.catwalks.client.CatwalkModelLoader;
 import dmfmm.catwalks.client.LadderModelLoader;
+import dmfmm.catwalks.client.StairModelLoader;
 import dmfmm.catwalks.registry.BlockRegistry;
 import dmfmm.catwalks.registry.ItemRegistry;
 import dmfmm.catwalks.utils.ICustomModelLocation;
@@ -12,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -28,6 +30,9 @@ public class ClientProxy extends CommonProxy{
         ModelLoaderRegistry.registerLoader(new CableModelLoader());
         ModelLoaderRegistry.registerLoader(new CatwalkModelLoader());
         ModelLoaderRegistry.registerLoader(new LadderModelLoader());
+        ModelLoaderRegistry.registerLoader(new StairModelLoader());
+
+        OBJLoader.INSTANCE.addDomain("catwalks");
     }
 
     public void init(FMLInitializationEvent e) {
