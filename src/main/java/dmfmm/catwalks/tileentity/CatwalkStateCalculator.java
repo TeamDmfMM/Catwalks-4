@@ -14,13 +14,17 @@ import java.util.HashMap;
 
 public class CatwalkStateCalculator {
 
-    static HashMap<Long, CatwalkTile> tileCache = new HashMap<>();
+    static HashMap<World, HashMap<Long, CatwalkTile>> tileCache = new HashMap<>();
 
-    public static void removeFromCache(BlockPos pos){
-        if(tileCache.containsKey(pos.toLong())){
-            tileCache.remove(pos.toLong());
+    public static void removeFromCache(World world, BlockPos pos){
+        if(tileCache.containsKey(world)) {
+            HashMap<Long, CatwalkTile> hashMap = tileCache.get(world);
+            if (hashMap.containsKey(pos.toLong())) {
+                hashMap.remove(pos.toLong());
+            }
         }
     }
+
     World world;
     BlockPos pos;
 
@@ -32,13 +36,24 @@ public class CatwalkStateCalculator {
     @Nullable
     public CatwalkTile getCached(BlockPos pos) {
         long l = pos.toLong();
-        if(tileCache.containsKey(l)){
-            return tileCache.get(l);
-        }
-        TileEntity tileEntity = world.getTileEntity(pos);
-        if(tileEntity instanceof CatwalkTile) {
-            tileCache.put(l, (CatwalkTile) tileEntity);
-            return (CatwalkTile) tileEntity;
+        if(tileCache.containsKey(world)){
+            HashMap<Long, CatwalkTile> hashMap = tileCache.get(world);
+            if(hashMap.containsKey(l)){
+                return hashMap.get(l);
+            }
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if(tileEntity instanceof CatwalkTile) {
+                hashMap.put(l, (CatwalkTile) tileEntity);
+                return (CatwalkTile) tileEntity;
+            }
+        } else {
+            HashMap<Long, CatwalkTile> hashMap = new HashMap<>();
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if(tileEntity instanceof CatwalkTile) {
+                hashMap.put(l, (CatwalkTile) tileEntity);
+                tileCache.put(world, hashMap);
+                return (CatwalkTile) tileEntity;
+            }
         }
         return null;
     }

@@ -176,7 +176,7 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         super.breakBlock(world, pos, state);
-        CatwalkStateCalculator.removeFromCache(pos);
+        CatwalkStateCalculator.removeFromCache(world, pos);
     }
 
     @Override
