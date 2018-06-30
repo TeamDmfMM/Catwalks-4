@@ -11,7 +11,8 @@
   "material": "treated_wood",
   "key": {
     "w": {
-      "item": "immersiveengineering:treated_wood"
+      "item": "immersiveengineering:treated_wood",
+      "data": 0
     },
     "s": {
       "type": "forge:ore_dict",
