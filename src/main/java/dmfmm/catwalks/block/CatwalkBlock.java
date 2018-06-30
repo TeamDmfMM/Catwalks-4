@@ -17,6 +17,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -179,13 +180,21 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-    {
-        ItemStack stack = new ItemStack(this, 1);
-        CatwalkMaterial mat = state.getValue(MATERIAL);
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setString("material", mat.getName().toLowerCase());
-        stack.setTagCompound(tag);
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        if (te == null) {
+            super.harvestBlock(worldIn, player, pos, state, null, stack);
+        }
+        else if (te instanceof CatwalkTile) {
+            stack = new ItemStack(this, 1);
+            CatwalkMaterial mat = ((CatwalkTile) te).getMaterial();
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setString("material", mat.getName().toLowerCase());
+            stack.setTagCompound(tag);
+            spawnAsEntity(worldIn, pos, stack);
+        }
+        else {
+            super.harvestBlock(worldIn, player, pos, state, te, stack);
+        }
     }
 
     @Override
