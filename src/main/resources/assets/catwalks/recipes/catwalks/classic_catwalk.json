@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "catwalks:catwalk",
+    "count": 4
+  },
+  "pattern": [
+    "p p",
+    "ipi"
+  ],
+  "type": "catwalks:nbt_craft",
+  "material": "classic",
+  "key": {
+    "p": {
+      "item": "minecraft:iron_bars"
+    },
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    }
+  }
+}

@@ -9,8 +9,7 @@ import dmfmm.catwalks.client.CatwalkState;
 import dmfmm.catwalks.registry.ItemRegistry;
 import dmfmm.catwalks.tileentity.CatwalkTile;
 import dmfmm.catwalks.utils.ICustomItemBlock;
-import javafx.util.Pair;
-import net.minecraft.block.BlockContainer;
+import dmfmm.catwalks.utils.Pair;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyEnum;
@@ -139,9 +138,11 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
             if (stack != ItemStack.EMPTY && stack.hasTagCompound() && stack.getTagCompound().hasKey("material")) {
                 String materialName = stack.getTagCompound().getString("material");
                 try {
-                    CatwalkMaterial mat = CatwalkMaterial.valueOf(materialName);
+                    CatwalkMaterial mat = CatwalkMaterial.valueOf(materialName.toUpperCase());
                     tile.updateMaterial(mat.getName());
-                } catch (IllegalArgumentException e) { }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("ass");
+                }
             }
 
             for(EnumFacing facing: EnumFacing.HORIZONTALS){

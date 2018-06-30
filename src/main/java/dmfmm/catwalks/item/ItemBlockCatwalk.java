@@ -3,6 +3,7 @@ package dmfmm.catwalks.item;
 import dmfmm.catwalks.registry.BlockRegistry;
 import dmfmm.catwalks.utils.CatwalkMaterial;
 import dmfmm.catwalks.utils.ICustomModelLocation;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
@@ -26,6 +27,15 @@ public class ItemBlockCatwalk extends ItemBlock implements ICustomModelLocation 
         for(CatwalkMaterial material: CatwalkMaterial.values()){
             ModelLoader.registerItemVariants(this, new ModelResourceLocation("catwalks:catwalk_items", "material=" + material.getName().toLowerCase()));
         }
+        ModelLoader.setCustomMeshDefinition(this, new ItemMeshDefinition() {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
+                if(stack.hasTagCompound() && stack.getTagCompound().hasKey("material")){
+                    return new ModelResourceLocation("catwalks:catwalk_items", "material=" + stack.getTagCompound().getString("material"));
+                }
+                return new ModelResourceLocation("catwalks:catwalk_items", "material=classic");
+            }
+        });
     }
 
     public String getUnlocalizedName(ItemStack stack)

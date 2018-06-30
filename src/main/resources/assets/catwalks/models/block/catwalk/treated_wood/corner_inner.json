@@ -1,0 +1,41 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"all": "catwalks:blocks/catwalk/treated_wood/sides"
+	},
+	"elements": [
+		{
+			"from": [0, 0, -1],
+			"to": [1, 16, 0],
+			"faces": {
+				"north": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90, "cullface": "north"},
+				"east": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90},
+				"south": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90},
+				"west": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90, "cullface": "west"},
+				"up": {"uv": [0, 5, 0.75, 5.75], "texture": "#all", "cullface": "up"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [1, 16, 1],
+			"faces": {
+				"north": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90, "cullface": "north"},
+				"east": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90},
+				"south": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90},
+				"west": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90, "cullface": "west"},
+				"up": {"uv": [0, 5, 0.75, 5.75], "texture": "#all", "cullface": "up"}
+			}
+		},
+		{
+			"from": [-1, 0, 0],
+			"to": [0, 16, 1],
+			"faces": {
+				"north": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90, "cullface": "north"},
+				"east": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90},
+				"south": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90},
+				"west": {"uv": [16, 9, 0, 10], "texture": "#all", "rotation": 90, "cullface": "west"},
+				"up": {"uv": [0, 5, 0.75, 5.75], "texture": "#all", "cullface": "up"}
+			}
+		}
+	]
+}

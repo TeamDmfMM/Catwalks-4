@@ -1,6 +1,7 @@
 package dmfmm.catwalks.proxy;
 
 import dmfmm.catwalks.client.CableModelLoader;
+import dmfmm.catwalks.client.CatwalkLegacyModelLoader;
 import dmfmm.catwalks.client.CatwalkModelLoader;
 import dmfmm.catwalks.client.LadderModelLoader;
 import dmfmm.catwalks.client.StairModelLoader;
@@ -30,6 +31,7 @@ public class ClientProxy extends CommonProxy{
         ModelLoaderRegistry.registerLoader(new CableModelLoader());
         ModelLoaderRegistry.registerLoader(new CatwalkModelLoader());
         ModelLoaderRegistry.registerLoader(new LadderModelLoader());
+        ModelLoaderRegistry.registerLoader(new CatwalkLegacyModelLoader());
         ModelLoaderRegistry.registerLoader(new StairModelLoader());
 
         OBJLoader.INSTANCE.addDomain("catwalks");
@@ -54,7 +56,13 @@ public class ClientProxy extends CommonProxy{
             }
         }
         for(Block block: BlockRegistry.BLOCKS){
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+            Item item = Item.getItemFromBlock(block);
+            if(item instanceof ICustomModelLocation){
+                ((ICustomModelLocation) item).getCustomModelLocation();
+            } else {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+            }
+
         }
     }
 

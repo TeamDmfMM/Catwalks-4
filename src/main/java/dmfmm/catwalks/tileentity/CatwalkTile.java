@@ -41,7 +41,7 @@ public class CatwalkTile extends TileEntity implements IConnectTile{
     }
 
     public void updateMaterial(String materialName){
-        this.material = CatwalkMaterial.valueOf(materialName);
+        this.material = CatwalkMaterial.valueOf(materialName.toUpperCase());
     }
 
     public CatwalkMaterial getMaterial() {

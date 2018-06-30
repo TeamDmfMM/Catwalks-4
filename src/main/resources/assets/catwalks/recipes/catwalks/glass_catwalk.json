@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "catwalks:catwalk",
+    "count": 4
+  },
+  "pattern": [
+    "ggg",
+    "p p",
+    "pgp"
+  ],
+  "type": "catwalks:nbt_craft",
+  "material": "glass",
+  "key": {
+    "p": {
+      "item": "minecraft:iron_bars"
+    },
+    "g": {
+      "type": "forge:ore_dict",
+      "ore": "paneGlass"
+    }
+  }
+}

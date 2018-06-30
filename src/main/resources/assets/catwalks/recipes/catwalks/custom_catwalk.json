@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "catwalks:catwalk",
+    "count": 4
+  },
+  "pattern": [
+    "igi",
+    "iwi"
+  ],
+  "type": "catwalks:nbt_craft",
+  "material": "custom_0",
+  "key": {
+    "w": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    },
+    "g": {
+      "item": "minecraft:glowstone"
+    }
+  }
+}

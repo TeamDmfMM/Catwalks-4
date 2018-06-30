@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "catwalks:ladder",
+    "count": 2
+  },
+  "pattern": [
+    "ili",
+    "i i",
+    " i "
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:ladder"
+    },
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    }
+  }
+}

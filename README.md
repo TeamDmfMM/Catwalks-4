@@ -10,7 +10,7 @@ I'd also like to thank the original modeller, winddelay, for his amazing models.
 
 ## So what can you expect us to add into the mod?
 
-- [ ] Basic Catwalks
+- [x] Basic Catwalks
 - [x] Support Cables
 - [ ] Catwalk Stairs
 - [ ] Catwalk Ladders

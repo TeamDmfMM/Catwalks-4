@@ -1,6 +1,7 @@
 package dmfmm.catwalks.client;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import dmfmm.catwalks.Catwalks;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -21,7 +22,7 @@ public class CatwalkModelLoader implements ICustomModelLoader {
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
-        return modelLocation.getResourceDomain().equals(Catwalks.MODID) && modelLocation.getResourcePath().contains("!!catwalks:catwalk");
+        return modelLocation.getResourceDomain().equals(Catwalks.MODID) && modelLocation.getResourcePath().endsWith("!!catwalks:catwalk");
     }
 
     @Override

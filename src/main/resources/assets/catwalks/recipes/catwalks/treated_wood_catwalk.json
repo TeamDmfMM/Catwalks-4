@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "catwalks:catwalk",
+    "count": 4
+  },
+  "pattern": [
+    "w w",
+    "sws"
+  ],
+  "type": "catwalks:nbt_craft",
+  "material": "treated_wood",
+  "key": {
+    "w": {
+      "item": "immersiveengineering:treated_wood",
+      "data": 0
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    }
+  }
+}

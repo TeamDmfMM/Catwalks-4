@@ -1,0 +1,5 @@
+{
+  "recipes": {
+    "nbt_craft": "dmfmm.catwalks.utils.NBTRecipeFactory"
+  }
+}

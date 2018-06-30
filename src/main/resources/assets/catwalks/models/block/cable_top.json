@@ -1,5 +1,6 @@
 {
-"__comment": "Designed by Winddelay with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+    "parent": "block/block",
+    "__comment": "Designed by Winddelay with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
     "textures": {
         "all": "catwalks:blocks/cable/steel/cable"
     },
