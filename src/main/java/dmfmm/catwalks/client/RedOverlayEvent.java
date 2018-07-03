@@ -127,9 +127,8 @@ public class RedOverlayEvent {
         GlStateManager.pushMatrix();
         GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
 
-        //GlStateManager.color(1, 0, 0, 1);
-        //GlStateManager.disableTexture2D();
 
+        GlStateManager.colorMask(false, true, true, true);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
@@ -143,7 +142,7 @@ public class RedOverlayEvent {
                     if(block instanceof CatwalkBlock){
                         BlockRendererDispatcher dispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
                         IBlockState actualState = block.getActualState(state, world, c);
-                        IBakedModel model = new RedWrapper(dispatcher.getModelForState(actualState));
+                        IBakedModel model = dispatcher.getModelForState(actualState);//new RedWrapper(dispatcher.getModelForState(actualState));
                         IBlockState state1 = computeMissingSides(world, actualState, c);
                         dispatcher.getBlockModelRenderer().renderModel(world, model, state1, c, buffer, false);
                     }
@@ -151,8 +150,7 @@ public class RedOverlayEvent {
             }
         }
         tessellator.draw();
-
-        //GlStateManager.enableTexture2D();
+        GlStateManager.colorMask(true, true, true, true);
         GlStateManager.popMatrix();
 
     }
