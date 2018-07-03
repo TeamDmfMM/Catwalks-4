@@ -1,6 +1,5 @@
-package dmfmm.catwalks.client;
+package dmfmm.catwalks.client.catwalks;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import dmfmm.catwalks.block.CatwalkBlock;
 import net.minecraft.block.state.IBlockState;

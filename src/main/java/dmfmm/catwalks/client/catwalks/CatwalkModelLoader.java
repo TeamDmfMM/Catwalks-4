@@ -1,7 +1,6 @@
-package dmfmm.catwalks.client;
+package dmfmm.catwalks.client.catwalks;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import dmfmm.catwalks.Catwalks;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

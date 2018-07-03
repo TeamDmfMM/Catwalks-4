@@ -1,4 +1,4 @@
-package dmfmm.catwalks.client;
+package dmfmm.catwalks.client.catwalks;
 
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
@@ -44,4 +44,11 @@ public class CatwalkState {
         return true;
     }
 
+    public List<CatwalkModel.RailSection> getRailSections(){
+        return railSections;
+    }
+
+    public List<CatwalkModel.FloorSection> getFloorSections() {
+        return floorSections;
+    }
 }

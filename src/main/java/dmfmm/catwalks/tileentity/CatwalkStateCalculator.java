@@ -1,8 +1,8 @@
 package dmfmm.catwalks.tileentity;
 
 
-import dmfmm.catwalks.client.CatwalkModel;
-import dmfmm.catwalks.client.CatwalkState;
+import dmfmm.catwalks.client.catwalks.CatwalkModel;
+import dmfmm.catwalks.client.catwalks.CatwalkState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;

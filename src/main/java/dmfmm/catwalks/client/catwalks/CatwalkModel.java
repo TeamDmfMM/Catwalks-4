@@ -1,7 +1,6 @@
-package dmfmm.catwalks.client;
+package dmfmm.catwalks.client.catwalks;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import dmfmm.catwalks.block.CatwalkBlock;
 import dmfmm.catwalks.utils.CatwalkConfigs;
 import net.minecraft.block.state.IBlockState;
@@ -12,7 +11,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
 import javax.annotation.Nullable;
@@ -35,9 +33,11 @@ public class CatwalkModel implements IBakedModel{
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
         CatwalkState cw = null;
         String material = "classic";
+        if(state != null){
+            material = state.getValue(CatwalkBlock.MATERIAL).getName().toLowerCase();
+        }
         if(state instanceof IExtendedBlockState){
             cw = ((IExtendedBlockState) state).getValue(CatwalkBlock.CATWALK_STATE);
-            material = ((IExtendedBlockState) state).getValue(CatwalkBlock.MATERIAL).getName().toLowerCase();
         }
         if (cw == null) {
             cw = new CatwalkState(RailSection.OUTER, RailSection.OUTER, RailSection.OUTER, RailSection.OUTER,

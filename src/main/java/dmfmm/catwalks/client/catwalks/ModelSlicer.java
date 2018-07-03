@@ -1,4 +1,4 @@
-package dmfmm.catwalks.client;
+package dmfmm.catwalks.client.catwalks;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.block.model.BakedQuad;

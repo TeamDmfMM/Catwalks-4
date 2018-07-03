@@ -1,9 +1,7 @@
-package dmfmm.catwalks.client;
+package dmfmm.catwalks.client.catwalks;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import dmfmm.catwalks.Catwalks;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

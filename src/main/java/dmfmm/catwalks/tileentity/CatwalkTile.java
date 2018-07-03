@@ -2,7 +2,7 @@ package dmfmm.catwalks.tileentity;
 
 
 import dmfmm.catwalks.utils.CatwalkMaterial;
-import dmfmm.catwalks.client.CatwalkState;
+import dmfmm.catwalks.client.catwalks.CatwalkState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
