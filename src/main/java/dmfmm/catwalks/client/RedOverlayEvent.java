@@ -13,21 +13,95 @@ import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
+import net.minecraftforge.client.model.pipeline.VertexTransformer;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @SideOnly(Side.CLIENT)
 public class RedOverlayEvent {
+
+    private static class RedWrapper implements IBakedModel {
+        IBakedModel delegate;
+
+        public RedWrapper(IBakedModel model) {
+            this.delegate = model;
+        }
+
+        @Override
+        public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+            List<BakedQuad> bbq = delegate.getQuads(state, side, rand);
+            bbq = bbq.stream().map(q -> {
+                UnpackedBakedQuad.Builder b = new UnpackedBakedQuad.Builder(q.getFormat());
+                q.pipe(new VertexTransformer(b) {
+                    @Override
+                    public void put(int element, float... data) {
+                        if (this.getVertexFormat().getElement(element).getUsage() == VertexFormatElement.EnumUsage.COLOR) {
+                            if (data.length >= 3) {
+                                data[0] = 1;
+                                data[1] = 0;
+                                data[2] = 0;
+                                super.put(element, data);
+                            }
+                            else {
+                                super.put(element, data);
+                            }
+                        }
+                        else {
+                            super.put(element, data);
+                        }
+                    }
+                });
+                UnpackedBakedQuad ubq = b.build();
+                return new BakedQuad(ubq.getVertexData(), ubq.getTintIndex(), ubq.getFace(), ubq.getSprite(), ubq.shouldApplyDiffuseLighting(), ubq.getFormat());
+            }).collect(Collectors.toList());
+            return bbq;
+        }
+
+        @Override
+        public boolean isAmbientOcclusion() {
+            return delegate.isAmbientOcclusion();
+        }
+
+        @Override
+        public boolean isGui3d() {
+            return delegate.isGui3d();
+        }
+
+        @Override
+        public boolean isBuiltInRenderer() {
+            return delegate.isBuiltInRenderer();
+        }
+
+        @Override
+        public TextureAtlasSprite getParticleTexture() {
+            return delegate.getParticleTexture();
+        }
+
+        @Override
+        public ItemOverrideList getOverrides() {
+            return delegate.getOverrides();
+        }
+    }
 
     @SubscribeEvent
     public void renderCatwalkEmptyFaces(RenderWorldLastEvent evt) {
@@ -53,7 +127,7 @@ public class RedOverlayEvent {
         GlStateManager.pushMatrix();
         GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
 
-        GlStateManager.color(1, 0, 0, 1);
+        //GlStateManager.color(1, 0, 0, 1);
         //GlStateManager.disableTexture2D();
 
         Tessellator tessellator = Tessellator.getInstance();
@@ -69,7 +143,7 @@ public class RedOverlayEvent {
                     if(block instanceof CatwalkBlock){
                         BlockRendererDispatcher dispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
                         IBlockState actualState = block.getActualState(state, world, c);
-                        IBakedModel model = dispatcher.getModelForState(actualState);
+                        IBakedModel model = new RedWrapper(dispatcher.getModelForState(actualState));
                         IBlockState state1 = computeMissingSides(world, actualState, c);
                         dispatcher.getBlockModelRenderer().renderModel(world, model, state1, c, buffer, false);
                     }
