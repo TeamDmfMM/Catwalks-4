@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 
-@Mod(modid = Catwalks.MODID, version = Catwalks.VERSION, name = Catwalks.MODNAME, acceptedMinecraftVersions = Catwalks.ALLOWED)
+@Mod(modid = Catwalks.MODID, version = Catwalks.VERSION, name = Catwalks.MODNAME, acceptedMinecraftVersions = Catwalks.ALLOWED, dependencies = Catwalks.DEPENDENCIES)
 public class Catwalks {
     public static final String MODID = "catwalks";
     public static final String MODNAME = "Catwalks";
@@ -17,7 +17,7 @@ public class Catwalks {
     public static final String ALLOWED = "[1.12.2,)";
     public static final String CLIENT = "dmfmm.catwalks.proxy.ClientProxy";
     public static final String SERVER = "dmfmm.catwalks.proxy.CommonProxy";
-    public static final String DEPENDENCIES = "required-after:forge@[13.19.1.2195,)";
+    public static final String DEPENDENCIES = "required-after:forge@[14.23.4.2705,)";
 
     public static Side side;
 

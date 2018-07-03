@@ -144,17 +144,23 @@ public class LadderModel implements IBakedModel {
                     break;
                 case TOP:
                     isConnected = ext.getValue(LadderBlock.CONNECTED);
-                    //Thick top cage
-                    bq.addAll(rotatedBigWrap.get(facing.getOpposite()).getQuads(state, side, rand));
-                    bq.addAll(rotatedBigWrap.get(facing.rotateYCCW()).getQuads(state, side, rand));
-
+                    hasCage = ext.getValue(LadderBlock.HAS_CAGE);
+                    if(hasCage){
+                        //Thick top cage
+                        bq.addAll(rotatedBigWrap.get(facing.getOpposite()).getQuads(state, side, rand));
+                        bq.addAll(rotatedBigWrap.get(facing.rotateYCCW()).getQuads(state, side, rand));
+                    }
                     if(isConnected){
                         bq.addAll(rotatedLadderTop.get(facing).getQuads(state, side, rand));
-                        bq.addAll(rotatedMergeRight.get(facing.rotateYCCW()).getQuads(state, side, rand));
-                        bq.addAll(rotatedMergeLeft.get(facing.rotateY()).getQuads(state, side, rand));
+                        if(hasCage) {
+                            bq.addAll(rotatedMergeRight.get(facing.rotateYCCW()).getQuads(state, side, rand));
+                            bq.addAll(rotatedMergeLeft.get(facing.rotateY()).getQuads(state, side, rand));
+                        }
                     } else {
-                        bq.addAll(rotatedBigRight.get(facing.rotateYCCW()).getQuads(state, side, rand));
-                        bq.addAll(rotatedBigLeft.get(facing.rotateY()).getQuads(state, side, rand));
+                        if(hasCage) {
+                            bq.addAll(rotatedBigRight.get(facing.rotateYCCW()).getQuads(state, side, rand));
+                            bq.addAll(rotatedBigLeft.get(facing.rotateY()).getQuads(state, side, rand));
+                        }
                         //Simple Ladder
                         bq.addAll(rotatedLadder.get(facing).getQuads(state, side, rand));
                         bq.addAll(rotatedSide.get(facing).getQuads(state, side, rand));
