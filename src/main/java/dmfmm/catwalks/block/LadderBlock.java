@@ -156,13 +156,14 @@ public class LadderBlock extends GenericBlock implements ITileEntityProvider{
         }
 
         //cage box
-        if(estate.getValue(STATE) == LadderState.TOP || (estate.getValue(STATE) == LadderState.MIDDLE && estate.getUnlistedNames().contains(HAS_CAGE) && estate.getValue(HAS_CAGE))){
+        if((estate.getValue(STATE) == LadderState.TOP && estate.getUnlistedNames().contains(HAS_CAGE) && estate.getValue(HAS_CAGE)) || (estate.getValue(STATE) == LadderState.MIDDLE && estate.getUnlistedNames().contains(HAS_CAGE) && estate.getValue(HAS_CAGE))){
             bb = new AxisAlignedBB(pos.getX() + hit[3][0], pos.getY() + hit[3][1], pos.getZ() + hit[3][2], pos.getX() + hit[3][3], pos.getY() + hit[3][4], pos.getZ() + hit[3][5]);
             if (bb.intersects(entityBox)) {
                 collidingBoxes.add(bb);
             }
         }
 
+        //Base colision
         if(estate.getValue(STATE) == LadderState.BOTTOM){
             bb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX()+ 1, pos.getY()+ 0.2, pos.getZ()+1);
             if (bb.intersects(entityBox)) {
