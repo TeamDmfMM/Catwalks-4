@@ -3,6 +3,7 @@ package dmfmm.catwalks.client;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import dmfmm.catwalks.block.CatwalkBlock;
+import dmfmm.catwalks.utils.CatwalkConfigs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -43,7 +44,7 @@ public class CatwalkModel implements IBakedModel{
                                   FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, FloorSection.OUTER, 0);
         }
 
-        if(cache2.containsKey(material)){
+        if(cache2.containsKey(material) && !CatwalkConfigs.supportOptifine){
             Map<CatwalkState, List<BakedQuad>> map = cache2.get(material);
             if(map.containsKey(cw)){
                 return map.get(cw);

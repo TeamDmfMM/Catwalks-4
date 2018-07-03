@@ -28,7 +28,6 @@ public class Catwalks {
  	public static CommonProxy proxy;
 
 
-
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         side = e.getSide();
