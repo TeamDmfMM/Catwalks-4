@@ -85,8 +85,6 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
 
     public CatwalkBlock() {
         super("catwalk");
-        this.setHardness(1.0f);
-        this.setResistance(5f);
         this.setSoundType(SoundType.METAL);
     }
 

@@ -14,6 +14,8 @@ public class GenericBlock extends Block {
         this.setRegistryName(new ResourceLocation(Catwalks.MODID, name));
         this.setUnlocalizedName(Catwalks.MODID + "." + name);
         this.setCreativeTab(GenericItem.INSTANCE);
+        this.setHardness(1.0f);
+        this.setResistance(5f);
         BlockRegistry.BLOCKS.add(this);
     }
 
