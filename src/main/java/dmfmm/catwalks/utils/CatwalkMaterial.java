@@ -7,7 +7,8 @@ public enum  CatwalkMaterial implements IStringSerializable {
     MAGNETICRAFT_STEEL,
     GLASS,
     CUSTOM_0,
-    TREATED_WOOD;
+    TREATED_WOOD,
+    NYANWALK;
 
     @Override
     public String getName() {

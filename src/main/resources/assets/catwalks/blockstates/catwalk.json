@@ -18,6 +18,12 @@
       "custom" : {
         "matchFloor": true
       }
+    },
+    "material=nyanwalk": {
+      "model": "catwalks:catwalk/nyan!!catwalks:catwalk_nyan",
+      "custom" : {
+        "matchFloor": true
+      }
     }
   }
 }

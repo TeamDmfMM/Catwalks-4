@@ -1,4 +1,4 @@
-package dmfmm.catwalks.utils;
+package dmfmm.catwalks.events;
 
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.ServerChatEvent;

@@ -18,18 +18,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class CatwalkLegacyModelLoader implements ICustomModelLoader {
+public class NyanWalkLoader implements ICustomModelLoader {
 
     private IResourceManager manager;
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
-        return modelLocation.getResourceDomain().equals(Catwalks.MODID) && modelLocation.getResourcePath().endsWith("!!catwalks:catwalk_legacy");
+        return modelLocation.getResourceDomain().equals(Catwalks.MODID) && modelLocation.getResourcePath().endsWith("!!catwalks:catwalk_nyan");
     }
 
     @Override
     public IModel loadModel(ResourceLocation modelLocation) throws Exception {
-        return new CatwalkLegacyModelWrapper(modelLocation.getResourceDomain(), modelLocation.getResourcePath().replace("!!catwalks:catwalk_legacy", "").replace("models/", ""), "");
+        return new NyanWalkWrapper(modelLocation.getResourceDomain(), modelLocation.getResourcePath().replace("!!catwalks:catwalk_nyan", "").replace("models/", ""), "");
     }
 
     @Override
@@ -38,27 +38,23 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
     }
 
 
-    class CatwalkLegacyModelWrapper implements IModel {
+    class NyanWalkWrapper implements IModel {
 
-        ResourceLocation bottom, bottom_corner, bottom_edge;
-        ResourceLocation corner_outer, right_merge, left_merge, corner_inner, left_connect, right_connect;
-        IModel modelbottom, modelBottomCorner, modelBottomEdge;
-        IModel modelOuterCorner, modelLeftMerge, modelRightMerge, modelInner, modelLeftConnect, modelRightConnect;
+        ResourceLocation bottom;
+        ResourceLocation corner_outer, right_merge, left_merge, left_connect, right_connect;
+        IModel modelbottom;
+        IModel modelOuterCorner, modelLeftMerge, modelRightMerge, modelLeftConnect, modelRightConnect;
         boolean match;
-        String path;
 
 
-        public CatwalkLegacyModelWrapper(String domain, String path, String postfix) {
+        public NyanWalkWrapper(String domain, String path, String postfix) {
             bottom = new ResourceLocation(domain, path + "/bottom" + postfix);
-            bottom_corner = new ResourceLocation(domain, path + "/bottom_corner" + postfix);
-            bottom_edge = new ResourceLocation(domain, path + "/bottom_edge" + postfix);
             corner_outer = new ResourceLocation(domain, path + "/corner_outer" + postfix);
-            right_merge = new ResourceLocation(domain, path + "/right_merge" + postfix);
-            left_merge = new ResourceLocation(domain, path + "/left_merge" + postfix);
-            corner_inner = new ResourceLocation(domain, path + "/corner_inner" + postfix);
-            left_connect = new ResourceLocation(domain, path + "/left_connect" + postfix);
-            right_connect = new ResourceLocation(domain, path + "/right_connect" + postfix);
-            this.path = path;
+            right_merge = new ResourceLocation(domain, path + "/right_end" + postfix);
+            left_merge = new ResourceLocation(domain, path + "/left_end" + postfix);
+            left_connect = new ResourceLocation(domain, path + "/left_everything" + postfix);
+            right_connect = new ResourceLocation(domain, path + "/right_everything" + postfix);
+
         }
 
         /**
@@ -74,36 +70,30 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
 
         @Override
         public Collection<ResourceLocation> getDependencies() {
-            return ImmutableList.of(bottom, bottom_corner, bottom_edge, corner_outer, right_merge, left_merge, corner_inner, left_connect, right_connect);
+            return ImmutableList.of(bottom, corner_outer, right_merge, left_merge, left_connect, right_connect);
         }
 
         @Override
         public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-            if (modelbottom == null || modelBottomCorner == null || modelBottomEdge == null) {
+            if (modelbottom == null) {
                 modelbottom = ModelLoaderRegistry.getModelOrMissing(bottom);
-                modelBottomCorner = ModelLoaderRegistry.getModelOrMissing(bottom_corner);
-                modelBottomEdge = ModelLoaderRegistry.getModelOrMissing(bottom_edge);
                 modelOuterCorner = ModelLoaderRegistry.getModelOrMissing(corner_outer);
                 modelLeftMerge = ModelLoaderRegistry.getModelOrMissing(left_merge);
                 modelRightMerge = ModelLoaderRegistry.getModelOrMissing(right_merge);
-                modelInner = ModelLoaderRegistry.getModelOrMissing(corner_inner);
                 modelLeftConnect = ModelLoaderRegistry.getModelOrMissing(left_connect);
                 modelRightConnect = ModelLoaderRegistry.getModelOrMissing(right_connect);
             }
             Map<String, IModel> models = new HashMap<>();
             models.put("bottom", modelbottom);
-            models.put("bottom_corner", modelBottomCorner);
-            models.put("bottom_edge", modelBottomEdge);
             models.put("corner_outer", modelOuterCorner);
             models.put("left_merge", modelLeftMerge);
             models.put("right_merge", modelRightMerge);
-            models.put("corner_inner", modelInner);
             models.put("left_connect", modelLeftConnect);
             models.put("right_connect", modelRightConnect);
 
             return new CatwalkLegacyModel(
                     match,
-                    path.substring(path.lastIndexOf("/") + 1),
+                    "nyanwalk",
                     models,
                     format,
                     bakedTextureGetter
@@ -111,4 +101,3 @@ public class CatwalkLegacyModelLoader implements ICustomModelLoader {
         }
     }
 }
-

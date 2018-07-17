@@ -3,6 +3,7 @@ package dmfmm.catwalks.proxy;
 import dmfmm.catwalks.client.*;
 import dmfmm.catwalks.client.catwalks.CatwalkLegacyModelLoader;
 import dmfmm.catwalks.client.catwalks.CatwalkModelLoader;
+import dmfmm.catwalks.client.catwalks.NyanWalkLoader;
 import dmfmm.catwalks.registry.BlockRegistry;
 import dmfmm.catwalks.registry.ItemRegistry;
 import dmfmm.catwalks.utils.ICustomModelLocation;
@@ -30,6 +31,7 @@ public class ClientProxy extends CommonProxy{
         ModelLoaderRegistry.registerLoader(new CatwalkModelLoader());
         ModelLoaderRegistry.registerLoader(new LadderModelLoader());
         ModelLoaderRegistry.registerLoader(new CatwalkLegacyModelLoader());
+        ModelLoaderRegistry.registerLoader(new NyanWalkLoader());
         ModelLoaderRegistry.registerLoader(new StairModelLoader());
 
         OBJLoader.INSTANCE.addDomain("catwalks");

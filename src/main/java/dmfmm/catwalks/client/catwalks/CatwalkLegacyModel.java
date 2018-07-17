@@ -24,12 +24,14 @@ import java.util.function.Function;
 public class CatwalkLegacyModel implements IBakedModel{
 
     static Map<CatwalkState, List<BakedQuad>> cache = new HashMap<>();
-    static Map<String, ImmutableMap<EnumFacing, IBakedModel>> modelPieces = new HashMap<>();
+    static Map<String, Map<String, ImmutableMap<EnumFacing, IBakedModel>>> modelPieces = new HashMap<>();
 
     private boolean match;
+    private String modelType;
 
-    public CatwalkLegacyModel(boolean matches, Map<String, IModel> models, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter){
+    public CatwalkLegacyModel(boolean matches, String modelMaterial, Map<String, IModel> models, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter){
         this.match = matches;
+        this.modelType = modelMaterial;
 
 
         ImmutableMap.Builder<EnumFacing, IBakedModel> builder;
@@ -40,7 +42,16 @@ public class CatwalkLegacyModel implements IBakedModel{
                 builder.put(facing, models.get(model).bake(transformation, format, bakedTextureGetter));
 
             }
-            modelPieces.put(model, builder.build());
+            if(modelPieces.containsKey(modelType)){
+                Map<String, ImmutableMap<EnumFacing, IBakedModel>> hash = modelPieces.get(modelType);
+                hash.put(model, builder.build());
+            } else {
+                Map<String, ImmutableMap<EnumFacing, IBakedModel>> hash = new HashMap<>();
+                hash.put(model, builder.build());
+                modelPieces.put(modelType, hash);
+            }
+
+
         }
     }
 
@@ -48,6 +59,10 @@ public class CatwalkLegacyModel implements IBakedModel{
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
         CatwalkState cw = null;
+        String material = "treated_wood";
+        if(state != null){
+            material = state.getValue(CatwalkBlock.MATERIAL).getName().toLowerCase();
+        }
         if(state instanceof IExtendedBlockState){
             cw = ((IExtendedBlockState) state).getValue(CatwalkBlock.CATWALK_STATE);
         }
@@ -62,11 +77,13 @@ public class CatwalkLegacyModel implements IBakedModel{
             CatwalkModel.FloorSection section = cw.floorSections.get(i);
             if(match){
                 if(section != null){
-                    for(EnumFacing facing: EnumFacing.HORIZONTALS){
-                        bq.addAll(modelPieces.get("bottom_corner").get(facing).getQuads(state, side, rand));
-                        bq.addAll(modelPieces.get("bottom_edge").get(facing).getQuads(state, side, rand));
+                    if(!material.equals("nyanwalk")){
+                        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+                            bq.addAll(modelPieces.get(material).get("bottom_corner").get(facing).getQuads(state, side, rand));
+                            bq.addAll(modelPieces.get(material).get("bottom_edge").get(facing).getQuads(state, side, rand));
+                        }
                     }
-                    bq.addAll(modelPieces.get("bottom").get(EnumFacing.NORTH).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get(material).get("bottom").get(EnumFacing.NORTH).getQuads(state, side, rand));
                 }
             } else {
                 //We custom build, but I'll write that another day
@@ -79,41 +96,60 @@ public class CatwalkLegacyModel implements IBakedModel{
             EnumFacing facing;
             switch (rail){
                 case OUTER:
-                    bq.addAll(modelPieces.get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
-                    bq.addAll(modelPieces.get("left_merge").get(facingFromInt(i)).getQuads(state, side, rand));
-                    bq.addAll(modelPieces.get("right_merge").get(facingFromInt(i).rotateYCCW()).getQuads(state, side, rand));
+                    if(!material.equals("nyanwalk")) {
+                        bq.addAll(modelPieces.get(material).get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get(material).get("left_merge").get(facingFromInt(i)).getQuads(state, side, rand));
+                        bq.addAll(modelPieces.get(material).get("right_merge").get(facingFromInt(i).rotateYCCW()).getQuads(state, side, rand));
+                    } else {
+                        if(i == 0){
+                            bq.addAll(modelPieces.get(material).get("left_merge").get(facingFromInt(i)).getQuads(state, side, rand));
+                            bq.addAll(modelPieces.get(material).get("right_connect").get(facingFromInt(i).rotateYCCW()).getQuads(state, side, rand));
+                        } else if(i == 1){
+                            bq.addAll(modelPieces.get(material).get("left_connect").get(facingFromInt(i)).getQuads(state, side, rand));
+                            bq.addAll(modelPieces.get(material).get("right_merge").get(facingFromInt(i).rotateYCCW()).getQuads(state, side, rand));
+                        } else if (i == 2){
+                            bq.addAll(modelPieces.get(material).get("left_merge").get(facingFromInt(i)).getQuads(state, side, rand));
+                            bq.addAll(modelPieces.get(material).get("right_connect").get(facingFromInt(i).rotateYCCW()).getQuads(state, side, rand));
+                        } else {
+                            bq.addAll(modelPieces.get(material).get("left_connect").get(facingFromInt(i)).getQuads(state, side, rand));
+                            bq.addAll(modelPieces.get(material).get("right_merge").get(facingFromInt(i).rotateYCCW()).getQuads(state, side, rand));
+                        }
+
+                    }
                     break;
 
                 case INNER:
-                    bq.addAll(modelPieces.get("corner_inner").get(facingFromInt(i)).getQuads(state, side, rand));
+                    if(!material.equals("nyanwalk")) {
+                        bq.addAll(modelPieces.get(material).get("corner_inner").get(facingFromInt(i)).getQuads(state, side, rand));
+                    }
                     break;
 
                 case Z_EDGE:
                     siding = i % 2 == 0 ? "right" : "left";
                     facing = i == 1 || i == 2 ? EnumFacing.EAST : EnumFacing.WEST;
-                    bq.addAll(modelPieces.get(siding + "_connect").get(facing).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get(material).get(siding + "_connect").get(facing).getQuads(state, side, rand));
                     break;
 
                 case X_END:
-                    bq.addAll(modelPieces.get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get(material).get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
 
                     siding = i % 2 == 0 ? "left" : "right";
                     facing = i <= 1 ? EnumFacing.NORTH : EnumFacing.SOUTH;
-                    bq.addAll(modelPieces.get(siding + "_merge").get(facing).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get(material).get(siding + "_merge").get(facing).getQuads(state, side, rand));
                     break;
 
                 case Z_END:
-                    bq.addAll(modelPieces.get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get(material).get("corner_outer").get(facingFromInt(i)).getQuads(state, side, rand));
 
                     siding = i % 2 == 0 ? "right" : "left";
                     facing = i == 1 || i == 2 ? EnumFacing.EAST : EnumFacing.WEST;
-                    bq.addAll(modelPieces.get(siding + "_merge").get(facing).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get(material).get(siding + "_merge").get(facing).getQuads(state, side, rand));
                     break;
 
                 case X_EDGE:
                     siding = i % 2 == 0 ? "left" : "right";
                     facing = i <= 1 ? EnumFacing.NORTH : EnumFacing.SOUTH;
-                    bq.addAll(modelPieces.get(siding + "_connect").get(facing).getQuads(state, side, rand));
+                    bq.addAll(modelPieces.get(material).get(siding + "_connect").get(facing).getQuads(state, side, rand));
                     break;
 
                 case MIDDLE:
@@ -157,7 +193,7 @@ public class CatwalkLegacyModel implements IBakedModel{
 
     @Override
     public TextureAtlasSprite getParticleTexture() {
-        return modelPieces.get("bottom").get(EnumFacing.NORTH).getParticleTexture();
+        return modelPieces.get(modelType).get("bottom").get(EnumFacing.NORTH).getParticleTexture();
     }
 
     @Override
