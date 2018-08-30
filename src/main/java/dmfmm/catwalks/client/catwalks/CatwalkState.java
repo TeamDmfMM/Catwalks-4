@@ -51,4 +51,10 @@ public class CatwalkState {
     public List<CatwalkModel.FloorSection> getFloorSections() {
         return floorSections;
     }
+
+    @Override
+    public String toString() {
+        return "RAIL SECTION: " + railSections.get(0).toString() + " " + railSections.get(1).toString() + " " + railSections.get(2).toString() + " " + railSections.get(3).toString() +
+                " FLOOR SECTION: " + floorSections.get(0).toString() + " " + floorSections.get(1).toString() + " " + floorSections.get(2).toString() + " " + floorSections.get(3).toString();
+    }
 }

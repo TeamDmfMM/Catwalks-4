@@ -47,7 +47,10 @@ public class CatwalkModel implements IBakedModel{
         if(cache2.containsKey(material) && !CatwalkConfigs.supportOptifine){
             Map<CatwalkState, List<BakedQuad>> map = cache2.get(material);
             if(map.containsKey(cw)){
-                return map.get(cw);
+                List<BakedQuad> quads = map.get(cw);
+                if(!quads.isEmpty()) {
+                    return map.get(cw);
+                }
             }
         } else {
             Map<CatwalkState, List<BakedQuad>> m = new HashMap<>();
