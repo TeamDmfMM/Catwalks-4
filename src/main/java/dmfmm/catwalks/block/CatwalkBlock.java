@@ -97,7 +97,7 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
         if(!(tileEntity instanceof CatwalkTile))
             return false;
         ((CatwalkTile) tileEntity).updateSide(facing, !((CatwalkTile) tileEntity).getSideState(facing));
-        world.notifyBlockUpdate(pos, state, state, 2);
+        world.notifyBlockUpdate(pos, state, state, 3);
         return true;
     }
 
