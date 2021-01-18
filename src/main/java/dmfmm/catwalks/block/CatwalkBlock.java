@@ -70,10 +70,10 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
     private static Map<EnumFacing, Pair<AxisAlignedBB, AxisAlignedBB>> boundingBoxes = new HashMap<>();
     static {
         boundingBoxes.put(EnumFacing.DOWN, new Pair<>(aabb( 0, 0,  0, 16,  0, 16), aabb( 4, 0,  4, 12, 0, 12)));
-        boundingBoxes.put(EnumFacing.NORTH, new Pair<>( aabb( 0, 0,  0, 16, 16,  0), aabb( 0, 0,  0, 16, 8,  0)));
-        boundingBoxes.put(EnumFacing.SOUTH, new Pair<>(aabb( 0, 0, 16, 16, 16, 16), aabb( 0, 0, 16, 16, 8, 16)));
-        boundingBoxes.put(EnumFacing.WEST, new Pair<>(aabb( 0, 0,  0,  0, 16, 16), aabb( 0, 0,  0,  0, 8, 16)));
-        boundingBoxes.put(EnumFacing.EAST, new Pair<>(aabb(16, 0,  0, 16, 16, 16), aabb(16, 0,  0, 16, 8, 16)));
+        boundingBoxes.put(EnumFacing.NORTH, new Pair<>( aabb( 0, 0,  0, 16, 24,  0), aabb( 0, 0,  0, 16, 8,  0)));
+        boundingBoxes.put(EnumFacing.SOUTH, new Pair<>(aabb( 0, 0, 16, 16, 24, 16), aabb( 0, 0, 16, 16, 8, 16)));
+        boundingBoxes.put(EnumFacing.WEST, new Pair<>(aabb( 0, 0,  0,  0, 24, 16), aabb( 0, 0,  0,  0, 8, 16)));
+        boundingBoxes.put(EnumFacing.EAST, new Pair<>(aabb(16, 0,  0, 16, 24, 16), aabb(16, 0,  0, 16, 8, 16)));
     }
 
     private static double p(int pixels){
@@ -273,7 +273,7 @@ public class CatwalkBlock extends GenericBlock implements ITileEntityProvider, I
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return bounds;
+        return bounds.setMaxY(1);
     }
 
     @SideOnly(Side.CLIENT)
